@@ -1,0 +1,129 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── NextAuth required models ───────────────────────────────
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ─── App models ──────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+
+  accounts   Account[]
+  sessions   Session[]
+  visits     Visit[]
+  ratings    Rating[]
+  follows    Follow[]  @relation("Follower")
+  followedBy Follow[]  @relation("Following")
+}
+
+model Shop {
+  id         String   @id @default(cuid())
+  name       String
+  address    String
+  latitude   Float
+  longitude  Float
+  amenities  String[] // e.g. ["wifi", "outlets", "quiet", "outdoor_seating"]
+  priceLevel Int?     // 1-4, optional
+  photoUrl   String?
+  createdAt  DateTime @default(now())
+
+  visits  Visit[]
+  ratings Rating[]
+
+  @@index([latitude, longitude])
+}
+
+model Visit {
+  id        String   @id @default(cuid())
+  userId    String
+  shopId    String
+  note      String?
+  visitedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shop Shop @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([shopId])
+}
+
+model Rating {
+  id         String     @id @default(cuid())
+  userId     String
+  shopId     String
+  stars      Int        // 1-5
+  comment    String?
+  visibility Visibility @default(PRIVATE)
+  createdAt  DateTime   @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shop Shop @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, shopId]) // one rating per user per shop
+  @@index([shopId])
+}
+
+model Follow {
+  id          String @id @default(cuid())
+  followerId  String
+  followingId String
+
+  follower  User @relation("Follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@unique([followerId, followingId])
+}
+
+enum Visibility {
+  PRIVATE
+  FRIENDS
+  PUBLIC
+}
