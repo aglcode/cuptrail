@@ -1,7 +1,8 @@
 // Shared app-level types. Database row types come from Prisma (`@prisma/client`)
 // and stay on the server; these are the shapes the UI consumes.
 
-export type Amenity = "wifi" | "outlets" | "quiet" | "outdoor" | "light" | "tables";
+export type Amenity =
+  "wifi" | "outlets" | "quiet" | "outdoor" | "light" | "tables";
 
 export type Coordinates = { latitude: number; longitude: number };
 
