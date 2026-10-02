@@ -1,12 +1,12 @@
 'use client';
 
-import { Button } from './ui/button';
+import { Button } from '@/components/ui/button';
 
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Shop } from '@/lib/coffee-data';
-import { Icon } from './icon';
+import { Icon } from '@/components/ui/icon';
 
 export function NeighborhoodMap({ shops, compact = false }: { shops: Shop[]; compact?: boolean }) {
   const [selected, setSelected] = useState<string>('kona-and-clay');

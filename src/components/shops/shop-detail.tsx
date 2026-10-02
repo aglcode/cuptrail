@@ -1,17 +1,17 @@
 'use client';
 
-import { Button } from './ui/button';
-import { LinkButton } from './ui/link-button';
+import { Button } from '@/components/ui/button';
+import { LinkButton } from '@/components/ui/link-button';
 
 import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { amenityOptions, formatVisitDate, type Shop } from '@/lib/coffee-data';
-import { useJournal } from './journal-provider';
-import { Icon } from './icon';
+import { useJournal } from '@/components/providers/journal-provider';
+import { Icon } from '@/components/ui/icon';
 import { BookmarkButton } from './shop-card';
 import { NeighborhoodMap } from './neighborhood-map';
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from './ui/dialog';
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 
 export function ShopDetail({ shop }: { shop: Shop }) {
   const { visits, notify } = useJournal();

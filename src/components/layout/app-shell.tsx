@@ -1,14 +1,14 @@
 'use client';
 
-import { LinkButton } from './ui/link-button';
-import { Button } from './ui/button';
+import { LinkButton } from '@/components/ui/link-button';
+import { Button } from '@/components/ui/button';
 
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Show, SignInButton, UserButton } from '@clerk/nextjs';
-import { Icon } from './icon';
-import mascot from '@/public/brand/cuptrail-mascot.png';
+import { Icon } from '@/components/ui/icon';
+import mascot from '@public/brand/cuptrail-mascot.png';
 
 export function AppHeader() {
   const path = usePathname();

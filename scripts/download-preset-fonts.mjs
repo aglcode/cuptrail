@@ -10,6 +10,6 @@ const fonts = [
 for (const [file, source] of fonts) {
   const response = await fetch(`https://raw.githubusercontent.com/google/fonts/main/ofl/${source}`);
   if (!response.ok) throw new Error(`${source}: ${response.status}`);
-  await writeFile(new URL(`../app/fonts/${file}`, import.meta.url), Buffer.from(await response.arrayBuffer()));
+  await writeFile(new URL(`../src/app/fonts/${file}`, import.meta.url), Buffer.from(await response.arrayBuffer()));
   console.log(`Saved ${file}`);
 }

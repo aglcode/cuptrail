@@ -1,20 +1,20 @@
 'use client';
 
-import { Toggle } from './ui/toggle';
+import { Toggle } from '@/components/ui/toggle';
 
-import { LinkButton } from './ui/link-button';
-import { NativeSelect } from './ui/native-select';
-import { Input } from './ui/input';
-import { Button } from './ui/button';
-import { Textarea } from './ui/textarea';
-import { Checkbox } from './ui/checkbox';
+import { LinkButton } from '@/components/ui/link-button';
+import { NativeSelect } from '@/components/ui/native-select';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
 
 import { useRef, useState, useSyncExternalStore, type ChangeEvent, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { shops, getShop, amenityOptions, type Shop, type VisitDraft, type Amenity } from '@/lib/coffee-data';
-import { Icon } from './icon';
-import { useJournal } from './journal-provider';
+import { Icon } from '@/components/ui/icon';
+import { useJournal } from '@/components/providers/journal-provider';
 
 const subscribe = () => () => {};
 export function VisitForm({ shop }: { shop: Shop }) {

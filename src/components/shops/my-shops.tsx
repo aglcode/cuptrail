@@ -1,23 +1,23 @@
 'use client';
 
-import { Card } from './ui/card';
-import { Badge } from './ui/badge';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
-import { Toggle } from './ui/toggle';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
+import { Toggle } from '@/components/ui/toggle';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
-import { Button } from './ui/button';
-import { LinkButton } from './ui/link-button';
-import { Input } from './ui/input';
-import { NativeSelect } from './ui/native-select';
+import { Button } from '@/components/ui/button';
+import { LinkButton } from '@/components/ui/link-button';
+import { Input } from '@/components/ui/input';
+import { NativeSelect } from '@/components/ui/native-select';
 
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import mascot from '@/public/brand/cuptrail-mascot.png';
+import mascot from '@public/brand/cuptrail-mascot.png';
 import { shops, getShop, formatVisitDate, type Visit } from '@/lib/coffee-data';
-import { useJournal } from './journal-provider';
-import { Icon } from './icon';
+import { useJournal } from '@/components/providers/journal-provider';
+import { Icon } from '@/components/ui/icon';
 import { ShopCard } from './shop-card';
 
 export function MyShops() {

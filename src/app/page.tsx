@@ -1,3 +1,3 @@
-import { Discover } from '@/components/discover';
+import { Discover } from '@/components/shops/discover';
 
 export default function Home() { return <Discover/>; }

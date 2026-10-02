@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { ClerkProvider } from '@clerk/nextjs'
 import localFont from 'next/font/local'
-import { AppHeader, AppFooter } from '@/components/app-shell'
-import { JournalProvider } from '@/components/journal-provider'
+import { AppHeader, AppFooter } from '@/components/layout/app-shell'
+import { JournalProvider } from '@/components/providers/journal-provider'
 import './globals.css'
 import { cn } from "@/lib/utils";
 

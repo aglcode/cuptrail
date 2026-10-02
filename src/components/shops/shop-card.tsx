@@ -1,15 +1,15 @@
 'use client';
 
-import { Card } from './ui/card';
-import { Badge } from './ui/badge';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
-import { Button } from './ui/button';
+import { Button } from '@/components/ui/button';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { amenityOptions, type Shop } from '@/lib/coffee-data';
-import { Icon } from './icon';
-import { useJournal } from './journal-provider';
+import { Icon } from '@/components/ui/icon';
+import { useJournal } from '@/components/providers/journal-provider';
 
 export function BookmarkButton({ shop, showLabel = false }: { shop: Shop; showLabel?: boolean }) {
   const { saved, toggleSaved } = useJournal();

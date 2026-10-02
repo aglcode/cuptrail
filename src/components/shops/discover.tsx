@@ -1,21 +1,21 @@
 'use client';
 
-import { Toggle } from './ui/toggle';
+import { Toggle } from '@/components/ui/toggle';
 
-import { NativeSelect } from './ui/native-select';
-import { Input } from './ui/input';
-import { Button } from './ui/button';
-import { LinkButton } from './ui/link-button';
+import { NativeSelect } from '@/components/ui/native-select';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { LinkButton } from '@/components/ui/link-button';
 
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
-import mascot from '@/public/brand/cuptrail-mascot.png';
+import mascot from '@public/brand/cuptrail-mascot.png';
 import { shops, amenityOptions, type Amenity } from '@/lib/coffee-data';
-import { Icon } from './icon';
+import { Icon } from '@/components/ui/icon';
 import { ShopCard } from './shop-card';
 import { NeighborhoodMap } from './neighborhood-map';
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from './ui/dialog';
-import { Checkbox } from './ui/checkbox';
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Checkbox } from '@/components/ui/checkbox';
 
 export function Discover() {
   const [query, setQuery] = useState('');

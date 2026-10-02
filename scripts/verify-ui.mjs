@@ -37,20 +37,25 @@ Module._load = function (request, parent, main) {
     for (const key of ['fill', 'preload', 'unoptimized']) delete attributes[key];
     return React.createElement('img', attributes);
   };
-  return load.call(this, request.startsWith('@/') ? path.join(project, request.slice(2)) : request, parent, main);
+  return load.call(this, resolveAlias(request), parent, main);
 };
+function resolveAlias(request) {
+  if (request.startsWith('@/')) return path.join(project, 'src', request.slice(2));
+  if (request.startsWith('@public/')) return path.join(project, 'public', request.slice(8));
+  return request;
+}
 for (const extension of ['.ts', '.tsx']) Module._extensions[extension] = (module, filename) => {
   const code = ts.transpileModule(fs.readFileSync(filename, 'utf8'), { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true } }).outputText;
   module._compile(code, filename);
 };
 Module._extensions['.png'] = module => { module.exports = { src: '/brand/cuptrail-mascot.png' }; };
 
-const { JournalProvider } = require('../components/journal-provider.tsx');
-const { Discover } = require('../components/discover.tsx');
-const { MyShops } = require('../components/my-shops.tsx');
-const { VisitForm } = require('../components/visit-form.tsx');
-const { ShopDetail } = require('../components/shop-detail.tsx');
-const { shops } = require('../lib/coffee-data.ts');
+const { JournalProvider } = require('../src/components/providers/journal-provider.tsx');
+const { Discover } = require('../src/components/shops/discover.tsx');
+const { MyShops } = require('../src/components/shops/my-shops.tsx');
+const { VisitForm } = require('../src/components/shops/visit-form.tsx');
+const { ShopDetail } = require('../src/components/shops/shop-detail.tsx');
+const { shops } = require('../src/lib/coffee-data.ts');
 const container = document.querySelector('#test-root');
 const root = createRoot(container);
 let page = 0;
