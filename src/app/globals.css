@@ -289,22 +289,37 @@
     border-radius: var(--radius-control);
     flex-shrink: 0;
     min-height: 56px;
+    color: var(--foreground);
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 150ms ease;
+  }
+  .region-select:hover,
+  .region-select[data-popup-open] {
+    border-color: var(--primary);
+  }
+  .region-select:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
   }
   .region-select > span {
     display: flex;
     flex-direction: column;
+    min-width: 0;
   }
   .region-select .eyebrow {
     font-size: 12px;
     color: var(--text-secondary);
   }
-  .region-select select {
-    font-size: 14px;
-    font-weight: 600;
+  .region-select-value {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
     min-width: 165px;
-    background: transparent;
-    padding-right: 8px;
     max-width: 220px;
+    font-size: 15px;
+    font-weight: 600;
   }
   .search-field {
     display: flex;
@@ -2302,10 +2317,9 @@
       align-items: center;
       gap: var(--space-2);
     }
-    .region-select select {
+    .region-select-value {
       min-width: 0;
       max-width: 100%;
-      min-height: 44px;
       font-size: 14px;
     }
     .search-control {
@@ -2775,9 +2789,6 @@
   }
   [data-slot="native-select-wrapper"].form-input select {
     min-height: 48px;
-  }
-  .region-select select {
-    padding-right: 32px;
   }
   .sort-control select {
     padding-right: 32px;

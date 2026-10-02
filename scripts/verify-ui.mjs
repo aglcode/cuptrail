@@ -243,6 +243,46 @@ try {
   await settle(300);
   assert.equal(replacements.at(-1), "/shops");
   await update(Discover, discover(shops));
+  const neighborhoodTrigger = () =>
+    all("button").find((button) =>
+      button.getAttribute("aria-label")?.startsWith("Neighborhood:"),
+    );
+  const menuOptions = () => all('[role="menuitemradio"]');
+  assert.equal(
+    neighborhoodTrigger().getAttribute("aria-label"),
+    "Neighborhood: New York, NY",
+  );
+  await click(neighborhoodTrigger());
+  assert.equal(neighborhoodTrigger().getAttribute("aria-expanded"), "true");
+  assert.deepEqual(
+    menuOptions().map((option) => option.textContent),
+    ["New York, NY", ...neighborhoods],
+  );
+  assert.equal(
+    menuOptions().find(
+      (option) => option.getAttribute("aria-checked") === "true",
+    ).textContent,
+    "New York, NY",
+  );
+  await click(
+    menuOptions().find((option) => option.textContent === "Lower East Side"),
+  );
+  assert.equal(replacements.at(-1), "/shops?neighborhood=Lower+East+Side");
+  await settle(50);
+  assert.equal(neighborhoodTrigger().getAttribute("aria-expanded"), "false");
+  await update(
+    Discover,
+    discover(
+      shops.filter((shop) => shop.neighborhood === "Lower East Side"),
+      { neighborhood: "Lower East Side" },
+    ),
+  );
+  assert.equal(
+    neighborhoodTrigger().getAttribute("aria-label"),
+    "Neighborhood: Lower East Side",
+  );
+  assert.equal(all(".shop-card").length, 2);
+  await update(Discover, discover(shops));
   await change(byLabel("select", "Sort coffee shops"), "nearest");
   assert.equal(replacements.at(-1), "/shops?sort=nearest");
   const nearest = [...shops].sort((a, b) => a.distance - b.distance);
@@ -279,7 +319,7 @@ try {
   await click(byLabel("button", "Save Kona & Clay"));
   assert.deepEqual(journal().saved, ["kona-and-clay"]);
   passed(
-    "Discovery search, sorting, layouts, map zoom/reset, amenity toggle, and bookmark persistence",
+    "Discovery search, neighborhood menu, sorting, layouts, map zoom/reset, amenity toggle, and bookmark persistence",
   );
 
   await click(byText("button", "All filters"));

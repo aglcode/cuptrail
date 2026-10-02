@@ -3,6 +3,16 @@
 import { Toggle } from "@/components/ui/toggle";
 
 import { NativeSelect } from "@/components/ui/native-select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
@@ -43,6 +53,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 const TOP_RATED = 4.5;
 const SEARCH_DEBOUNCE_MS = 250;
+// The "no neighborhood filter" choice, shown as the chapter's city.
+const ALL_NEIGHBORHOODS = "New York, NY";
 
 function discoverHref(filters: ShopFilters) {
   const search = shopFiltersToSearchParams(filters).toString();
@@ -206,30 +218,64 @@ export function Discover({
         <div className="discovery-toolbar">
           <div className="page-width">
             <div className="search-row">
-              <label className="region-select">
-                <Icon name="compass" className="text-primary" size={21} />
-                <span>
-                  <span className="eyebrow">Explore a neighborhood</span>
-                  <NativeSelect
-                    aria-label="Neighborhood"
-                    className="lg:[&>select]:h-7 lg:[&>select]:min-h-0 lg:[&>select]:rounded-md lg:[&>select]:border-0 lg:[&>select]:bg-transparent lg:[&>select]:pr-6 lg:[&>select]:pl-0 lg:[&>select]:text-[15px] lg:[&>select]:font-semibold lg:[&>svg]:right-0"
-                    value={current.neighborhood ?? "all"}
-                    onChange={(event) =>
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  className="region-select group"
+                  aria-label={`Neighborhood: ${current.neighborhood ?? ALL_NEIGHBORHOODS}`}
+                >
+                  <Icon name="compass" className="text-primary" size={21} />
+                  <span>
+                    <span className="eyebrow">Explore a neighborhood</span>
+                    <span className="region-select-value">
+                      <span className="truncate">
+                        {current.neighborhood ?? ALL_NEIGHBORHOODS}
+                      </span>
+                      <Icon
+                        name="chevron"
+                        size={16}
+                        className="shrink-0 text-muted-foreground transition-transform group-data-popup-open:rotate-180"
+                      />
+                    </span>
+                  </span>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="min-w-56">
+                  <DropdownMenuRadioGroup
+                    value={current.neighborhood ?? ALL_NEIGHBORHOODS}
+                    onValueChange={(value: string) =>
                       navigate({
                         neighborhood:
-                          event.target.value === "all"
-                            ? undefined
-                            : event.target.value,
+                          value === ALL_NEIGHBORHOODS ? undefined : value,
                       })
                     }
                   >
-                    <option value="all">New York, NY</option>
-                    {neighborhoods.map((item) => (
-                      <option key={item}>{item}</option>
-                    ))}
-                  </NativeSelect>
-                </span>
-              </label>
+                    <DropdownMenuRadioItem
+                      closeOnClick
+                      value={ALL_NEIGHBORHOODS}
+                      className="min-h-11"
+                    >
+                      {ALL_NEIGHBORHOODS}
+                    </DropdownMenuRadioItem>
+                    {neighborhoods.length > 0 && (
+                      <>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuGroup>
+                          <DropdownMenuLabel>Neighborhoods</DropdownMenuLabel>
+                          {neighborhoods.map((item) => (
+                            <DropdownMenuRadioItem
+                              closeOnClick
+                              key={item}
+                              value={item}
+                              className="min-h-11"
+                            >
+                              {item}
+                            </DropdownMenuRadioItem>
+                          ))}
+                        </DropdownMenuGroup>
+                      </>
+                    )}
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <div className="search-control">
                 <label htmlFor="shop-search" className="eyebrow">
                   Search coffee shops
