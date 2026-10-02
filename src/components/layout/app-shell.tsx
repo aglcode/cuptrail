@@ -1,12 +1,11 @@
 "use client";
 
 import { LinkButton } from "@/components/ui/link-button";
-import { Button } from "@/components/ui/button";
 
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Show, SignInButton, UserButton } from "@clerk/nextjs";
+import { HeaderAccount } from "./header-account";
 import { Icon } from "@/components/ui/icon";
 import mascot from "@public/brand/cuptrail-mascot.png";
 
@@ -20,7 +19,7 @@ export function AppHeader() {
       </a>
       <header className="app-header">
         <div className="page-width flex items-center justify-between gap-4">
-          <Link href="/shops" className="brand" aria-label="Cuptrail home">
+          <Link href="/" className="brand" aria-label="Cuptrail home">
             <Image
               src={mascot}
               alt=""
@@ -63,22 +62,7 @@ export function AppHeader() {
               <Icon name="plus" size={16} />
               Log visit
             </LinkButton>
-            <Show when="signed-out">
-              <SignInButton mode="modal">
-                <Button
-                  variant="secondary"
-                  className="profile-button"
-                  aria-label="Sign in to Cuptrail"
-                >
-                  <Icon name="user" size={17} />
-                </Button>
-              </SignInButton>
-            </Show>
-            <Show when="signed-in">
-              <UserButton
-                appearance={{ elements: { avatarBox: "w-11 h-11" } }}
-              />
-            </Show>
+            <HeaderAccount />
           </div>
         </div>
       </header>
