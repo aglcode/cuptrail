@@ -80,7 +80,7 @@ export function ShopCard({
   return (
     <Card
       role="article"
-      className={`shop-card group gap-4 p-3 shadow-sm ${grid ? "shop-card-grid flex-col" : "flex-col sm:flex-row"}`}
+      className={`shop-card gap-4 p-3 shadow-sm ${grid ? "shop-card-grid flex-col" : "flex-col sm:flex-row"}`}
     >
       <div className="shop-card-image">
         <Link href={`/shops/${shop.slug}`} tabIndex={-1} aria-hidden="true">
@@ -94,7 +94,7 @@ export function ShopCard({
                 : "(max-width: 639px) 92vw, 220px"
             }
             preload={featured}
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.035]"
+            className="object-cover"
           />
         </Link>
         <Badge className="image-category">{shop.category}</Badge>
