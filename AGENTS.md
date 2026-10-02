@@ -62,6 +62,7 @@ src/proxy.ts       Clerk middleware
 - `npm run dev` — start the dev server at `http://localhost:4000` (restart it after any `.env` or `src/proxy.ts` change)
 - `npm run build` / `npm run start` — production start also uses port 4000
 - `npm run lint`
+- `npm run format` / `npm run format:check` — Prettier (with Tailwind class sorting). VS Code formats on save via `.vscode/settings.json`; keep markdown hand-formatted (ignored). Formatting-only commits go in `.git-blame-ignore-revs`.
 - `npm run test:ui` — isolated React/Base UI interaction regressions against `scripts/fixtures/shops.json` (Next, Clerk, and `fetch` are stubbed; no DB or real user data is touched)
 - `npx prisma generate` → `npm run db:push` — sync schema to Neon (`postinstall` also runs `prisma generate`)
 - `npm run db:seed` — upsert the sample shops (idempotent)

@@ -45,6 +45,7 @@ Requires Node 20+ and a Neon (or any Postgres) database.
 | `npm run dev` | Dev server on port 4000 |
 | `npm run build` / `npm run start` | Production build / server (port 4000) |
 | `npm run lint` | ESLint |
+| `npm run format` / `format:check` | Prettier, incl. Tailwind class sorting (VS Code formats on save) |
 | `npm run test:ui` | jsdom interaction tests for the real components (Next, Clerk, and the API are stubbed; no DB) |
 | `npm run db:push` | Apply `prisma/schema.prisma` to the database (no migration files yet) |
 | `npm run db:seed` | Upsert the sample shops (idempotent) |
