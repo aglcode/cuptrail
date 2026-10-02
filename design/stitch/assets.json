@@ -1,0 +1,86 @@
+[
+  {
+    "screen": "discover-desktop",
+    "name": "kona",
+    "sourceUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuCM8PNwf8Xa_Mn22_NpPcBLh9SPfcLuvpnzpDpLYjTQ32GacBcj1oEI9wvaEVJx29Yq4WzbnM7ETfS_Y406YKbilrtCihaN6M7xdOvyy4txaGGClDWjp-pzksPw5zZ463FMCfV-pDEcAw-4Ip4lXBlHtxfKEJzM4Z8iqU3af6tAgl6sL_68ufuQFKVkLdstJf0samXb9O5BhmCBsZbg2tXg-f9XGOlng8IbE2bFbLQQOAtniY3AEFk",
+    "path": "/images/kona.webp"
+  },
+  {
+    "screen": "discover-desktop",
+    "name": "dune",
+    "sourceUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuDPyuAUuV7owNpytL9WKzEuT_sm12gWPijBe9NSJ1LpP9rmAbDYJ5h06vDq09hmsqAHufSYYdomH4yloeW7UVVDAJDoTeQ_23msXM_1SxTXcRba9KbYuw60dOCQx8wkFRNaWK-MiDIGu2lYkxRr9mIA_cGYMytrchwL5DltSLlocbXkcccKFTE78Ry6d_Ahjbv-3aKdox1xMvVgsXk8VSXbtbTOf7XPfEP_0r7iWCDlHGw1nDzXon8",
+    "path": "/images/dune.webp"
+  },
+  {
+    "screen": "discover-desktop",
+    "name": "marrow",
+    "sourceUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuAzau6oy4rD-KGB8CG04X5_rCb64-fDCORizIGjnuwMrIV3LdVW5ASxgD2rFrfrYC-i4Du6S5JEMf05Psq13abrGZuq1XKP4xJfr24Mf1NhzR8TURTp0_a-CPJ7LowN5doFUEQjmVADAZWbJZc7sMCoqaECENnDJ5ImhtxrYz2cVjgxhKiuHfPgTbjuMSN6xQCVd8FbcwMCjpzQXwLVoeKQux1BoBJtUvOYZgY9avkz5ZthqyLTO5g",
+    "path": "/images/marrow.webp"
+  },
+  {
+    "screen": "discover-desktop",
+    "name": "linden",
+    "sourceUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuAYYuwe_g8T0dOoMVRe3K2XR0Id8yhfIy34ozm4qFARsergbkw8zRS6SPUiy-3WaY5B_A_BXgz1Z0o3B2KYfIAPJNbpotUoLQKGk1JDY121_41a7IRWh05r1tRxhb4ItMJitCMzwE2ApOROriH_jwmdI_1fi8AnW_Hdi1-KmJ9pj1s95cCbK-x3cYNLPijPak6sByMockxkZyCKdIstMruF533_IaQAMWhj8f-SAubCyzMvhM9zkQo",
+    "path": "/images/linden.webp"
+  },
+  {
+    "screen": "discover-desktop",
+    "name": "map-preview",
+    "sourceUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuC8lzyF_kmHdTIEIyTYng9cfYYEjpSCBwNb1le57TQvl5XFScxrop0yj8WNoaiHELVRcLlyzqJoEeSIjzE0caPVZecPgMjddTod_jrONhLN_flfzU0lP_EuE6cbo9oqFZDHUVdBVAXzfDxP2vxIMkddDOP3gusMr0rnDqIeMwdGxgtPPJWguWoEVdENBmuB3i8QsBHhCovYOiqQWyYijDPAfE7ufPpxPG4eRqZRuYzIKPsbePH8DUk",
+    "path": "/images/map-preview.webp"
+  },
+  {
+    "screen": "detail-desktop",
+    "name": "kona-interior",
+    "sourceUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuB7TPKOe3pYKlx34Cx6JMGzBoxMX4tMp_utNuM7FX5J7c68nBW1lpzZG-2dClQUkOarrPmE6p-kmk2Qy4om8THXlOo5_9ZaWpXvZ9Oz4iz2-uFPhHfeMqI0fBnCFFAu9elIO5gfud3LpJBv9lbq01HDkZozamwbYa0Hz7BEuhEeCLVD94cqsfKYMaUUJVcvWI1I5D0f6fEzRurr0nVol14K9etkq3XMJe621oop2GHMkfZsnjkge8o",
+    "path": "/images/kona-interior.webp"
+  },
+  {
+    "screen": "detail-desktop",
+    "name": "pour-over",
+    "sourceUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuDsOHuXqfFrsMAvh54YNbKnFPsDOd38sAl-KFMZO17jRSnhyGS5l3cBa0R3aLLm1KibRz38MkjpH_TGo1fmT04MtkPJGplASegFolDx47VwbQtaYpOlYkdOOesFqwTqtz_RqITGlZ-M8YbqfJlsXSYSXEtkIOuzuP5IeF0mCuNyIk0QEn_kO1krtqa83gpTyHqjjMIM0-bAKIYobIHVm6AEogDF9JfcrNKRrARcne1TpVFo3qgqkL8",
+    "path": "/images/pour-over.webp"
+  },
+  {
+    "screen": "detail-desktop",
+    "name": "window-seat",
+    "sourceUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuC1mZBxSxS-_l4_Fq6_nzmn8PZ6Vtqr3JKND3pn16OqSnTEnBnIteNZpcbnYK8OcYeiyXlKlMGVIAWIsHfoGSC8TjJDYmuVT-YrrTKsQN9Sz_vSXAf8-_7jwtM6ReDfhYnx2l1f3AKUmi79PQbv6A7EKUK9dUmii0f5d3RUBTQQMw2aCM5YA_gA2Sb135aiFW62qApst8ghvYaQL3-zOtGdjkjs9A35fZn-RnoBX6kJ6-zwIWWiQ9M",
+    "path": "/images/window-seat.webp"
+  },
+  {
+    "screen": "library-desktop",
+    "name": "journal-kona",
+    "sourceUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuClU9jblEHiltVwOzrEvybRg7lxucO9nn1JnZ21S7_usRvgKiCMVYoltQiz5riONhiCVdb5rlM6cHG-Q2IjAt2g8b0F3pC6NPMQx8omkphW8Wn3IOlB2Yky9k3H33bLOuTXjb6HiNs4GUbyUMfip-RzRaQu5ZSraXqVxdxOxM7mqkt-NxhjObkaOgmk7di2crWuFpn1CtER1q3Ppg0ZqzXvV_wvFXgpeSZmozMK6Vf3b2F8Ny0Kl54",
+    "path": "/images/journal-kona.webp"
+  },
+  {
+    "screen": "library-desktop",
+    "name": "journal-marrow",
+    "sourceUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuAv0OcOg_8nsZiSV0WaL7q7V-sANfNLPytRMezP3FYhNw1HQoMPoTDyGEoexfKoRbeJxJt9MaOcotPLkSefh36EeCL7u84SwVwZ38H5gCAs0Y2vAOaGpI7BpaDyA4vtrJ3TpsikOUxcOtBAuJ4RaIyLoRVPnEZRvjHu-bNLG6sUOClTdcmj3_nivTsCcisNLbWrhAEgaLSK4ARq9Z0IL3uDWas_2XLb7RzLGlXHnIV63JjApGdnre8",
+    "path": "/images/journal-marrow.webp"
+  },
+  {
+    "screen": "library-desktop",
+    "name": "journal-dune",
+    "sourceUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuDm9Dp0n6eiZVP_OB3emmu7Re6SvH9wNy8Y-fjm5jP1G7lhh0lhF9XnVKyfZp4uHcv9n1P2pU5RyANDZ197i8bCpIPb1irSvXuBvVYMvaLGPUzTBPtd7ZDrUSuNyWpPK8imZqOCXl6RvPUyjRqIGTfTv5XCwCrZgvDmFEYZ0lZCIX1nsww129jx_pcPb9BQI7SipqhtINpOIlD1j47786-S8j1alHcU5a91cvSNjutPF1xulFZSles",
+    "path": "/images/journal-dune.webp"
+  },
+  {
+    "screen": "library-desktop",
+    "name": "ninth-street",
+    "sourceUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuAvAE3_TPfxgaddnEeArDT1B5LYNHvmmyBTXf0bzVEIvR9ZMmkaoaJOyGcp4qcc_gYgYTbnfU36bgjGTIWoFp0DLehJ97-1RzMM-zmpE4AdNuXD3AI3TodeN0oElznnAB2ogukncF5XYy2wNGv58x3gZSO54zeBcZShwgQUQX7MYSIgbCjzG4-WQulRwnNGmXaWEKhVAJsjRzN129jrAWsmV43kE1-9uQDvCQL8HCN1siIj8JEL6rs",
+    "path": "/images/ninth-street.webp"
+  },
+  {
+    "screen": "library-desktop",
+    "name": "journal-linden",
+    "sourceUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuDlQrLftUT5Pj7sEDMuKfA08sDCJgKaXtV-d_GjWP2NawFyGMP6CelXF2MxtzcFhATgizdoc3sWgM_zNuWeJQXNQD8dDp376MIRiqRZyXsAZEgPrn1TkzLalsn6_cdaimZnNqHmj_cig5xX_R-HY8jTkdI1LMOk8QbX0fablP2hp_oWgBa3GOGaEFqb23KMKI7o-W5z75L8VwkMUF3LIJ_1QqNBBijGW5fo8FXn9yZA_Uey1bPlSSo",
+    "path": "/images/journal-linden.webp"
+  },
+  {
+    "screen": "discover-desktop",
+    "name": "neighborhood-map",
+    "sourceUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuACe27mGPcZw_S1mMJ4y2F5QWE1zOLKG4-4Xnyhs53W6fTRjwBPquL_rUXIvTpQS7R5jYYRmWtgWaPWY35FEvEl-Jw-65Ny0l0Kz5Vs8iy-uVCpMy9a4LTx8pfXhgQJI7zYsGVqMnMM-s_x-yACgdE5GQyEjr6EeKGR1aocjfDUdAyiBU6s6cU1dKooKhWuRUiPxn75py_EeSkanNbyjTcZff-LZXLsqHNklm1daQoYwOn74iEbBoY",
+    "path": "/images/neighborhood-map.webp"
+  }
+]

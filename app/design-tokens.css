@@ -1,0 +1,43 @@
+/* Shared Cuptrail theme. Orange and sage are accents; text uses darker roles. */
+:root {
+  color-scheme: light;
+  --background: #f7f1e7;
+  --surface: #fffaf2;
+  --soft: #efe4d5;
+  --foreground: #54301f;
+  --deep: #3c2418;
+  --muted: #79503a;
+  --brand: #d8863f;
+  --accent: #8b481f;
+  --brand-soft: #f3dcc2;
+  --sage: #849271;
+  --success: #48603b;
+  --success-soft: #e6ebde;
+  --error: #973b2c;
+  --error-soft: #fae8e0;
+  --warning: #80501e;
+  --warning-soft: #f5e6c8;
+  --border: rgba(84, 48, 31, 0.12);
+  --control-border: #987c65;
+  --primary-hover: #683c27;
+  --focus: #8b481f;
+  --overlay: rgba(60, 36, 24, 0.48);
+  --image-overlay: rgba(60, 36, 24, 0.9);
+  --on-dark-muted: #efddc8;
+  --shadow: 0 8px 30px rgba(84, 48, 31, 0.06);
+  --shadow-raised: 0 12px 36px rgba(84, 48, 31, 0.12);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --radius-control: 14px;
+  --radius-card: 24px;
+  --radius-dialog: 32px;
+  --radius-pill: 999px;
+  --motion: 180ms;
+  --header-height: 88px;
+}

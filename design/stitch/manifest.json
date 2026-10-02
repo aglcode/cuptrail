@@ -1,0 +1,166 @@
+{
+  "projectId": "608711120162096693",
+  "screens": [
+    {
+      "id": "4df65a58dee3468eb49a3c64c6418c63",
+      "slug": "detail-desktop",
+      "deviceType": "DESKTOP",
+      "height": "4402",
+      "htmlCode": {
+        "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ6Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpZCiVodG1sXzAwMDY1YjJkNzZkM2MwMDUwMjA3YTQ0NTM2MDZjMDMxEgsSBxC0vv6IwxsYAZIBIgoKcHJvamVjdF9pZBIUQhI2MDg3MTExMjAxNjIwOTY2OTM&filename=&opi=89354086",
+        "mimeType": "text/html",
+        "name": "projects/608711120162096693/screens/4df65a58dee3468eb49a3c64c6418c63/fileEntries/html"
+      },
+      "name": "projects/608711120162096693/screens/4df65a58dee3468eb49a3c64c6418c63",
+      "screenshot": {
+        "downloadUrl": "https://lh3.googleusercontent.com/aida/AEtjO1WwNA6G-GnSCVvlhreOn-q_Jq7u00s3OoOqHSSlVmF1v4yUJUJiDuSmwe5VKa05KKHT1c5GI0FdJHMHj6TzqSIb4m9Bktuaezbe4-v-mSXk8rn-Os60VALI2lWvVU994DtvS8xqnrddSshPqcG4la84KkpgeR709AYkejgOV0OjL-Gm_A9z_eyFbr6w0c8f0Jw9lFvowcSscwF57RpnPrZGaxDZnYADQG3qtQvG1MobngLX2smQyYlp1A",
+        "name": "projects/608711120162096693/screens/4df65a58dee3468eb49a3c64c6418c63/fileEntries/screenshot"
+      },
+      "title": "Shop Detail — Kona & Clay (Desktop)",
+      "width": "2560"
+    },
+    {
+      "id": "6ae4333b7ee746408273559e691426f1",
+      "slug": "library-desktop",
+      "deviceType": "DESKTOP",
+      "height": "3854",
+      "htmlCode": {
+        "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ6Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpZCiVodG1sXzAwMDY1YjJkNzZhNzM2MmIwMmE5OWYwZDVlMDlkMGI1EgsSBxC0vv6IwxsYAZIBIgoKcHJvamVjdF9pZBIUQhI2MDg3MTExMjAxNjIwOTY2OTM&filename=&opi=89354086",
+        "mimeType": "text/html",
+        "name": "projects/608711120162096693/screens/6ae4333b7ee746408273559e691426f1/fileEntries/html"
+      },
+      "name": "projects/608711120162096693/screens/6ae4333b7ee746408273559e691426f1",
+      "screenshot": {
+        "downloadUrl": "https://lh3.googleusercontent.com/aida/AEtjO1UynMG-efgUzyes-69hLBj8P6VulOc39nZQiBiFDLBXNmk-iLvfkglmxJpZjEwjhOIVDPJQgEQvyov-DMtX9NzcoKErDoh7FILM0gdgaLowOQxw49dwHZ_tOn-64goxTbiNF1-fqWFaHQxI6XWbnEHbchLY4gyWpQr-U3btSfK511FyAtiHaJBDZ4AAR8zLrIDhuVhN3_cG3D8UZi2IAkNsDN-oGb3uI5cnHKSTfnIqEVqKpTe6QYVemg",
+        "name": "projects/608711120162096693/screens/6ae4333b7ee746408273559e691426f1/fileEntries/screenshot"
+      },
+      "title": "My Logged Shops — Desktop",
+      "width": "2560"
+    },
+    {
+      "id": "b6556657325f440683d9aeb71d0272c0",
+      "slug": "log-mobile",
+      "deviceType": "MOBILE",
+      "height": "3038",
+      "htmlCode": {
+        "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ6Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpZCiVodG1sXzAwMDY1YjJkNTcxMTY4NzMwMWE2MGViZDMwMGFjYTY3EgsSBxC0vv6IwxsYAZIBIgoKcHJvamVjdF9pZBIUQhI2MDg3MTExMjAxNjIwOTY2OTM&filename=&opi=89354086",
+        "mimeType": "text/html",
+        "name": "projects/608711120162096693/screens/b6556657325f440683d9aeb71d0272c0/fileEntries/html"
+      },
+      "name": "projects/608711120162096693/screens/b6556657325f440683d9aeb71d0272c0",
+      "screenshot": {
+        "downloadUrl": "https://lh3.googleusercontent.com/aida/AEtjO1XP-KUwdcX0y2WifyVc_CR24UKvLuuplnFh0KmdZT2uftOitn-2slLcy9doDr28SLhPN0xS8QLG4qkDRASoqb60ydlLccykl0QadbvkAHMAHCPsKjVXgn1Nubd-7JjhjRhxEkKsm8LF6_oOvq0NhfqJXFjkM_F6X24K6k86JrLR7qOiiCKruUX4F873aAZlVoHQSKIdvKckLlUj7VNyny8SCtG9cO2HxUJbjqg8htFL5jhWg4K95Ev8XQ",
+        "name": "projects/608711120162096693/screens/b6556657325f440683d9aeb71d0272c0/fileEntries/screenshot"
+      },
+      "title": "Log Visit & Rate",
+      "width": "780"
+    },
+    {
+      "id": "c51757b9633946b59d0b157cb3759876",
+      "slug": "log-desktop",
+      "deviceType": "DESKTOP",
+      "height": "2392",
+      "htmlCode": {
+        "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ6Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpZCiVodG1sXzAwMDY1YjJkNzY2MjVhY2MwMzgzYTEyMzBjMjBkYzYyEgsSBxC0vv6IwxsYAZIBIgoKcHJvamVjdF9pZBIUQhI2MDg3MTExMjAxNjIwOTY2OTM&filename=&opi=89354086",
+        "mimeType": "text/html",
+        "name": "projects/608711120162096693/screens/c51757b9633946b59d0b157cb3759876/fileEntries/html"
+      },
+      "name": "projects/608711120162096693/screens/c51757b9633946b59d0b157cb3759876",
+      "screenshot": {
+        "downloadUrl": "https://lh3.googleusercontent.com/aida/AEtjO1UQLae2UDVD2my9PJigW8sfmW4Zk-0Gn0ixZ1WHkFW-LyI2Y2yZuKvhNfPLNksR8yAD_P6fj_Y3FnbZDxgjnb1pct2BmDKnH8aSD3Os5_k3YawDBifNStvBPciBmOwnPFb0VI2oNdnaSgwBO4kl19BB2-oghQ1rio6RZzLtiDitSFdhMmwHLbypiI7DCv6ki7q7DyY9UHHUG34zUw4m6jn1Cf3s6t_5SNaUZsVD3KQqDYmjD4xlScD9",
+        "name": "projects/608711120162096693/screens/c51757b9633946b59d0b157cb3759876/fileEntries/screenshot"
+      },
+      "title": "Log Visit & Rate — Desktop",
+      "width": "2560"
+    },
+    {
+      "id": "f14dae96717e486abe13a5c3c06f12f5",
+      "slug": "discover-desktop",
+      "deviceType": "DESKTOP",
+      "height": "3148",
+      "htmlCode": {
+        "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ6Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpZCiVodG1sXzAwMDY1YjJkNzdmMTJiODUwMDMwM2VjNDU2MmU2ODdiEgsSBxC0vv6IwxsYAZIBIgoKcHJvamVjdF9pZBIUQhI2MDg3MTExMjAxNjIwOTY2OTM&filename=&opi=89354086",
+        "mimeType": "text/html",
+        "name": "projects/608711120162096693/screens/f14dae96717e486abe13a5c3c06f12f5/fileEntries/html"
+      },
+      "name": "projects/608711120162096693/screens/f14dae96717e486abe13a5c3c06f12f5",
+      "screenshot": {
+        "downloadUrl": "https://lh3.googleusercontent.com/aida/AEtjO1UIAiuivoOsdteopRhjtFAQk2VPAviVsiVGhammBokNi9oBBNVrfu7_mC-4miE06PS12V3Ju8UVDLG1CDP_xzfMKP7rnr7AXyqN66APiCxde1teoY5Qsai0VNwlYomQih7huJVOucSwYgXxWP7-Wjl3o8yityoKQrHr_xn4OoFD8AB0K9lH1wknKLrxwuGlnHMW2iMS0U2vTNVu5P5Q8DaWk4N1oulyWvGI8LWp-tcRMDR5kLjccxd61w",
+        "name": "projects/608711120162096693/screens/f14dae96717e486abe13a5c3c06f12f5/fileEntries/screenshot"
+      },
+      "title": "Discover Coffee Shops — Desktop",
+      "width": "2560"
+    },
+    {
+      "id": "f1ff1d2012484557b1fb44a00c3eb91d",
+      "slug": "library-mobile",
+      "deviceType": "MOBILE",
+      "height": "2840",
+      "htmlCode": {
+        "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ6Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpZCiVodG1sXzAwMDY1YjJkNTcyMGI5ZWMwMzMyZTcwYWQ4MmE4YjgxEgsSBxC0vv6IwxsYAZIBIgoKcHJvamVjdF9pZBIUQhI2MDg3MTExMjAxNjIwOTY2OTM&filename=&opi=89354086",
+        "mimeType": "text/html",
+        "name": "projects/608711120162096693/screens/f1ff1d2012484557b1fb44a00c3eb91d/fileEntries/html"
+      },
+      "name": "projects/608711120162096693/screens/f1ff1d2012484557b1fb44a00c3eb91d",
+      "screenshot": {
+        "downloadUrl": "https://lh3.googleusercontent.com/aida/AEtjO1U79TTaLvlgYX0WjD2wto3Iq44XkVCEm0gUZ_ytd0vfoNy8nazJAh5HQHTRCsY1r8rruC-hCmUjnIxEMsV8CmxQq7PTz2jSu2NtT4--6j0qRXCagInNXaFLEucvUvPBSxlslCPSwzQ-tEjw5e8zBTjwt4yr-upyTF7PUd0F5XKyGw4xUbcT9kVwqlVoyaz3OOcXlHel-IsIUjqKQ7Sr-B5oNE-rBRtcrhVXIOZxvXZB2yIelc-f_SRK",
+        "name": "projects/608711120162096693/screens/f1ff1d2012484557b1fb44a00c3eb91d/fileEntries/screenshot"
+      },
+      "title": "My Logged Shops",
+      "width": "780"
+    },
+    {
+      "id": "2ac5fb1febb840e0b5fec09ad962d0f6",
+      "slug": "detail-mobile",
+      "deviceType": "MOBILE",
+      "height": "3558",
+      "htmlCode": {
+        "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ6Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpZCiVodG1sXzAwMDY1YjJkNTc0MjQ1NzEwMWE2MTAwMWI0MTI2NDk5EgsSBxC0vv6IwxsYAZIBIgoKcHJvamVjdF9pZBIUQhI2MDg3MTExMjAxNjIwOTY2OTM&filename=&opi=89354086",
+        "mimeType": "text/html",
+        "name": "projects/608711120162096693/screens/2ac5fb1febb840e0b5fec09ad962d0f6/fileEntries/html"
+      },
+      "name": "projects/608711120162096693/screens/2ac5fb1febb840e0b5fec09ad962d0f6",
+      "screenshot": {
+        "downloadUrl": "https://lh3.googleusercontent.com/aida/AEtjO1V7NISfimJ9Ejns-GvZ_EHdpiy-Tluttch1-whTMBwEyg8g-UhRzk3wFeaoPcW9SjiyP0zvnPWGXM-eYEesTmFgvgxogfSTEzWYRpbdGl10kpzjy9XYq8UPKmmfhBOifWfBQr9Ae4YXofFNZ-b3_COMfZUg3ry2-oAaGbUf-p-mACma4GnjminkgYaS5VgqS64Nma7fkjZ_dCDDbz6x48wKoAMeY4IFh2csx1Y-L6DFRP4dcbM9z5VJKA",
+        "name": "projects/608711120162096693/screens/2ac5fb1febb840e0b5fec09ad962d0f6/fileEntries/screenshot"
+      },
+      "title": "Shop Detail — Kona & Clay",
+      "width": "780"
+    },
+    {
+      "id": "5b42d2b4505943a1aefd79091f20955e",
+      "slug": "discover-mobile",
+      "deviceType": "MOBILE",
+      "height": "3784",
+      "htmlCode": {
+        "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ6Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpZCiVodG1sXzAwMDY1YjJkNTc0ZDc1NmUwNTIyOWVlOTk3MWM5OTY4EgsSBxC0vv6IwxsYAZIBIgoKcHJvamVjdF9pZBIUQhI2MDg3MTExMjAxNjIwOTY2OTM&filename=&opi=89354086",
+        "mimeType": "text/html",
+        "name": "projects/608711120162096693/screens/5b42d2b4505943a1aefd79091f20955e/fileEntries/html"
+      },
+      "name": "projects/608711120162096693/screens/5b42d2b4505943a1aefd79091f20955e",
+      "screenshot": {
+        "downloadUrl": "https://lh3.googleusercontent.com/aida/AEtjO1VZ0cEWLOu_D98sYA0-L61sMZQT8pGbxPqoT63qnLIHBuccCk9mqjN8Wt6XlzEjDs7_ug7FzJ5PdFhhAg6c5DqdeLgSEWflWkluLwQpK1Dq41XNC_nkPAysaUCeON-C3S4FbdWcYGrxf4Vupe5WxFQyyQbCBOzsdj5o1ZOIzKA8W7_IF4vWPAiKwznv0mu3NrV1ITi0aYFFV54cU28w31OK7qaMQjWuKHtXDanuWxh0BkZRChdLg7-ksQ",
+        "name": "projects/608711120162096693/screens/5b42d2b4505943a1aefd79091f20955e/fileEntries/screenshot"
+      },
+      "title": "Discover Coffee Shops",
+      "width": "780"
+    },
+    {
+      "id": "2f98d926bf714536b1272e8ed2ac8efd",
+      "slug": "emblem",
+      "height": "48",
+      "htmlCode": {
+        "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ6Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpZCiVodG1sXzAwMDY1YjJkNTM4M2RiZDQwMzM4NWIwNzk2MTM0OTRiEgsSBxC0vv6IwxsYAZIBIgoKcHJvamVjdF9pZBIUQhI2MDg3MTExMjAxNjIwOTY2OTM&filename=&opi=89354086",
+        "mimeType": "image/svg+xml",
+        "name": "projects/608711120162096693/screens/2f98d926bf714536b1272e8ed2ac8efd/fileEntries/html"
+      },
+      "name": "projects/608711120162096693/screens/2f98d926bf714536b1272e8ed2ac8efd",
+      "screenshot": {
+        "downloadUrl": "https://lh3.googleusercontent.com/aida/AEtjO1VE15i2USx-k59zsh39ywFkICVJg-FIsX-AmAE0JOBMw6pPe58KSl5Ziysv4NU5n-h7SkVC9fCQEooIjUzHsEWhDxSPGkFe-K1v_7J6brHjLPer47Dseq48TOog6_-wB73DUjlJcDyhKXqIua8MGg4_CSOrdgTMXeK5txk2CdSLD0DDeIXsFXhfHQbx6Bbi06TcusPZ-_iug7F7jJhlHLdhppBGGD4Rnq3IrEgLHQDZhKurRDRoFep6DQ",
+        "name": "projects/608711120162096693/screens/371c05a209ec1a6657222c780250ff5cd1c3e672453c52da00cee4cb3a15e393/fileEntries/screenshot"
+      },
+      "title": "Coffee Shop Finder Emblem",
+      "width": "48"
+    }
+  ]
+}
