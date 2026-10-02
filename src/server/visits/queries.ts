@@ -7,7 +7,10 @@ const MAX_PAGE_SIZE = 50;
  * A user's journal, newest first, keyset-paginated on the
  * (userId, visitedAt desc) index: pass the last visit's id as `cursor`.
  */
-export async function listVisitsForUser(userId: string, { cursor, limit = 20 }: { cursor?: string; limit?: number } = {}) {
+export async function listVisitsForUser(
+  userId: string,
+  { cursor, limit = 20 }: { cursor?: string; limit?: number } = {},
+) {
   const take = Math.min(Math.max(limit, 1), MAX_PAGE_SIZE);
   const visits = await prisma.visit.findMany({
     where: { userId },
@@ -15,8 +18,12 @@ export async function listVisitsForUser(userId: string, { cursor, limit = 20 }: 
     take: take + 1,
     ...(cursor ? { cursor: { id: cursor }, skip: 1 } : {}),
     select: {
-      id: true, note: true, visitedAt: true,
-      shop: { select: { id: true, slug: true, name: true, neighborhood: true } },
+      id: true,
+      note: true,
+      visitedAt: true,
+      shop: {
+        select: { id: true, slug: true, name: true, neighborhood: true },
+      },
     },
   });
   const hasMore = visits.length > take;

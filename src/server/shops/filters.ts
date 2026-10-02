@@ -5,15 +5,21 @@ import { DEFAULT_SHOP_SORT, shopSorts } from "@/lib/shop-filters";
 import { isShopSlug } from "@/lib/slug";
 import type { Amenity, ShopFilters } from "@/types";
 
-type RawParams = Record<string, string | string[] | undefined> | URLSearchParams;
+type RawParams =
+  Record<string, string | string[] | undefined> | URLSearchParams;
 
 // Lenient by design: these come from shareable URLs, so a bad value is dropped
 // rather than failing the whole page.
 const shopFiltersSchema = z.object({
   q: z.string().trim().min(1).max(100).optional().catch(undefined),
   neighborhood: z.string().trim().min(1).max(100).optional().catch(undefined),
-  amenities: z.string().optional()
-    .transform(value => [...new Set((value ?? "").split(","))].filter(isAmenity) as Amenity[])
+  amenities: z
+    .string()
+    .optional()
+    .transform(
+      (value) =>
+        [...new Set((value ?? "").split(","))].filter(isAmenity) as Amenity[],
+    )
     .catch([]),
   minRating: z.coerce.number().min(0).max(5).optional().catch(undefined),
   price: z.coerce.number().int().min(1).max(4).optional().catch(undefined),
@@ -44,6 +50,11 @@ export function parseOffset(params: RawParams): number {
 }
 
 /** Parses a comma-separated slug list, dropping invalid entries and capping its length. */
-export function parseSlugs(value: string | null | undefined, max: number): string[] {
-  return [...new Set((value ?? "").split(","))].filter(isShopSlug).slice(0, max);
+export function parseSlugs(
+  value: string | null | undefined,
+  max: number,
+): string[] {
+  return [...new Set((value ?? "").split(","))]
+    .filter(isShopSlug)
+    .slice(0, max);
 }

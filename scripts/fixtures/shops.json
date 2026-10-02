@@ -16,20 +16,11 @@
     "wifi": 120,
     "noise": "Serene study",
     "outlets": "Every booth",
-    "amenities": [
-      "wifi",
-      "outlets",
-      "quiet",
-      "light",
-      "tables"
-    ],
+    "amenities": ["wifi", "outlets", "quiet", "light", "tables"],
     "roast": "Nordic light roast",
     "hours": "7:00 AM – 6:00 PM",
     "specialty": "Ethiopia Guji pour-over",
-    "map": [
-      48,
-      34
-    ]
+    "map": [48, 34]
   },
   {
     "id": "fixture-dune-roasters",
@@ -48,19 +39,11 @@
     "wifi": 85,
     "noise": "Calm & cozy",
     "outlets": "Window bench",
-    "amenities": [
-      "wifi",
-      "outlets",
-      "light",
-      "tables"
-    ],
+    "amenities": ["wifi", "outlets", "light", "tables"],
     "roast": "Seasonal medium roast",
     "hours": "8:00 AM – 7:00 PM",
     "specialty": "Oat milk flat white",
-    "map": [
-      28,
-      52
-    ]
+    "map": [28, 52]
   },
   {
     "id": "fixture-marrow-coffee-works",
@@ -79,19 +62,11 @@
     "wifi": 210,
     "noise": "Soft buzz",
     "outlets": "Dual ports",
-    "amenities": [
-      "wifi",
-      "outlets",
-      "quiet",
-      "tables"
-    ],
+    "amenities": ["wifi", "outlets", "quiet", "tables"],
     "roast": "House espresso blend",
     "hours": "7:30 AM – 8:00 PM",
     "specialty": "House roast cortado",
-    "map": [
-      65,
-      64
-    ]
+    "map": [65, 64]
   },
   {
     "id": "fixture-linden-and-leaf",
@@ -110,18 +85,11 @@
     "wifi": 60,
     "noise": "Whisper quiet",
     "outlets": "Indoor seats",
-    "amenities": [
-      "outdoor",
-      "quiet",
-      "light"
-    ],
+    "amenities": ["outdoor", "quiet", "light"],
     "roast": "Light roast & matcha",
     "hours": "8:00 AM – 7:00 PM",
     "specialty": "Ceremonial Uji matcha",
-    "map": [
-      74,
-      23
-    ]
+    "map": [74, 23]
   },
   {
     "id": "fixture-ninth-street-espresso",
@@ -140,15 +108,10 @@
     "wifi": 0,
     "noise": "Lively pulse",
     "outlets": "Limited",
-    "amenities": [
-      "light"
-    ],
+    "amenities": ["light"],
     "roast": "Classic espresso",
     "hours": "7:00 AM – 5:00 PM",
     "specialty": "Double espresso",
-    "map": [
-      38,
-      21
-    ]
+    "map": [38, 21]
   }
 ]

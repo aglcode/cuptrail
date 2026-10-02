@@ -7,15 +7,36 @@ const PLACEHOLDER_IMAGE = "/images/pour-over.webp";
 
 /** Columns the UI needs. Keep list queries on this select, never the full row. */
 export const shopViewSelect = {
-  id: true, slug: true, name: true, neighborhood: true, address: true,
-  description: true, category: true, latitude: true, longitude: true,
-  amenities: true, priceLevel: true, photoUrl: true, journalPhotoUrl: true,
-  wifiMbps: true, atmosphere: true, outletsNote: true, roast: true,
-  hours: true, specialty: true, mapX: true, mapY: true,
-  ratingAvg: true, ratingCount: true,
+  id: true,
+  slug: true,
+  name: true,
+  neighborhood: true,
+  address: true,
+  description: true,
+  category: true,
+  latitude: true,
+  longitude: true,
+  amenities: true,
+  priceLevel: true,
+  photoUrl: true,
+  journalPhotoUrl: true,
+  wifiMbps: true,
+  atmosphere: true,
+  outletsNote: true,
+  roast: true,
+  hours: true,
+  specialty: true,
+  mapX: true,
+  mapY: true,
+  ratingAvg: true,
+  ratingCount: true,
 } satisfies Prisma.ShopSelect;
 
-export const shopOptionSelect = { slug: true, name: true, neighborhood: true } satisfies Prisma.ShopSelect;
+export const shopOptionSelect = {
+  slug: true,
+  name: true,
+  neighborhood: true,
+} satisfies Prisma.ShopSelect;
 
 type ShopViewRow = Prisma.ShopGetPayload<{ select: typeof shopViewSelect }>;
 

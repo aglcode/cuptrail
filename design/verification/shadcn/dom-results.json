@@ -1,7 +1,7 @@
 {
   "mode": "jsdom component integration; Next/Clerk boundaries stubbed",
   "passed": [
-    "Discovery search, sorting, layouts, map zoom/reset, amenity toggle, and bookmark persistence",
+    "Discovery search, neighborhood menu, sorting, layouts, map zoom/reset, amenity toggle, and bookmark persistence",
     "Dialog checkbox/price filtering and focus restoration",
     "Journal tab selection, filtered visits, and saved shops",
     "Rating/date/upload validation, duration, checkboxes/orders, per-shop drafts, and saving",

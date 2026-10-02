@@ -8,14 +8,22 @@
   --deep: var(--foreground);
   --brand: var(--primary);
   --brand-soft: color-mix(in oklch, var(--primary) 10%, var(--background));
-  --text-secondary: color-mix(in oklch, var(--muted-foreground) 90%, var(--foreground));
+  --text-secondary: color-mix(
+    in oklch,
+    var(--muted-foreground) 90%,
+    var(--foreground)
+  );
   --success: #48603b;
   --success-soft: #e6ebde;
   --error: #973b2c;
   --error-soft: #fae8e0;
   --warning: #80501e;
   --warning-soft: #f5e6c8;
-  --control-border: color-mix(in oklch, var(--foreground) 45%, var(--background));
+  --control-border: color-mix(
+    in oklch,
+    var(--foreground) 45%,
+    var(--background)
+  );
   --primary-hover: color-mix(in oklch, var(--primary) 80%, var(--background));
   --focus: var(--primary);
   --overlay: oklch(0.147 0.004 49.25 / 48%);

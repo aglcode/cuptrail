@@ -45,6 +45,7 @@ Requires Node 20+ and a Neon (or any Postgres) database.
 | `npm run dev` | Dev server on port 4000 |
 | `npm run build` / `npm run start` | Production build / server (port 4000) |
 | `npm run lint` | ESLint |
+| `npm run format` / `format:check` | Prettier, incl. Tailwind class sorting (VS Code formats on save) |
 | `npm run test:ui` | jsdom interaction tests for the real components (Next, Clerk, and the API are stubbed; no DB) |
 | `npm run db:push` | Apply `prisma/schema.prisma` to the database (no migration files yet) |
 | `npm run db:seed` | Upsert the sample shops (idempotent) |
@@ -58,14 +59,17 @@ prisma/
   seed.ts              # sample New York shops
 src/
   app/                 # routes only — thin; they call server/ and render components/
-    shops/             # /shops (Discover) and /shops/[slug] (detail)
-    me/                # /me — "My shops" journal
-    log-visit/         # /log-visit?shop=[slug]
+    (marketing)/       # public pages with their own header/footer; page.tsx = landing page (/)
+    (app)/             # the product, with the app header/footer:
+      shops/           #   /shops (Discover) and /shops/[slug] (detail)
+      me/              #   /me — "My shops" journal
+      log-visit/       #   /log-visit?shop=[slug]
     api/shops/         # GET endpoints for client-side paging and journal lookups
   components/
     ui/                # shadcn/Base UI primitives + Icon
     shops/             # feature components (Discover, ShopCard, ShopDetail, VisitForm, …)
-    layout/            # app header/footer
+    layout/            # app header/footer, shared 404 body
+    marketing/         # landing page header/footer
     providers/         # client state (device-local journal)
   server/              # server-only data access, grouped by domain
     shops/             # queries, URL filter parsing, row → view mapping
@@ -91,12 +95,14 @@ src/
 
 | Route | Experience |
 | --- | --- |
+| `/` | Landing page (placeholder hero for now) — `src/app/(marketing)/page.tsx` |
 | `/shops` | Search, neighborhood/amenity/rating/price filters and sorting (all in the URL, filtered in Postgres), split/grid/map layouts, paging |
 | `/shops/[slug]` | Gallery, amenities, details, your visit history, sharing |
 | `/log-visit?shop=[slug]` | Star rating, visit time, duration, amenities, orders, notes, photos, recoverable drafts |
 | `/me` | Visit journal, stats, favorites, work-friendly visits, saved shops, export, removal with Undo |
 
-`/` redirects to `/shops`; the old `/my-shops` permanently redirects to `/me`.
+Folders in parentheses are route groups: they organize files and layouts without changing URLs.
+The old `/my-shops` permanently redirects to `/me`.
 
 ## Data: what's live and what isn't yet
 
