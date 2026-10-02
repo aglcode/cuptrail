@@ -3,7 +3,7 @@ import { execFileSync } from 'node:child_process';
 import sharp from 'sharp';
 
 fs.mkdirSync('public/images', { recursive: true });
-fs.mkdirSync('app/fonts', { recursive: true });
+fs.mkdirSync('src/app/fonts', { recursive: true });
 const groups = {
   'discover-desktop': ['kona', 'dune', 'marrow', 'linden', 'map-preview'],
   'detail-desktop': ['kona-interior', 'pour-over', 'window-seat'],
@@ -35,12 +35,12 @@ const fonts = [
   ['newsreader', 'https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap'],
 ];
 for (const [name, url] of fonts) {
-  if (fs.existsSync(`app/fonts/${name}-0.ttf`)) continue;
+  if (fs.existsSync(`src/app/fonts/${name}-0.ttf`)) continue;
   const css = execFileSync('curl.exe', ['-f', '-L', '--silent', '--show-error', '-A', 'Mozilla/5.0', url], { encoding: 'utf8' });
   const urls = [...new Set([...css.matchAll(/url\((https:[^)]+)\)/g)].map(match => match[1]))];
   for (let index = 0; index < urls.length; index++) {
     const extension = urls[index].endsWith('.ttf') ? 'ttf' : 'woff2';
-    execFileSync('curl.exe', ['-f', '-L', '--silent', '--show-error', urls[index], '-o', `app/fonts/${name}-${index}.${extension}`]);
+    execFileSync('curl.exe', ['-f', '-L', '--silent', '--show-error', urls[index], '-o', `src/app/fonts/${name}-${index}.${extension}`]);
   }
   fs.writeFileSync(`design/stitch/${name}-fonts.css`, css);
   console.log(`Saved ${name} fonts (${urls.length})`);

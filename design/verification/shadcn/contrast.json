@@ -1,0 +1,40 @@
+{
+  "mode": "source token calculation in sRGB; not a rendered-page audit",
+  "results": [
+    {
+      "label": "Body",
+      "foreground": "foreground",
+      "background": "background",
+      "ratio": 19.75,
+      "minimum": 4.5
+    },
+    {
+      "label": "Supporting text on stone",
+      "foreground": "text-secondary",
+      "background": "muted",
+      "ratio": 5.23,
+      "minimum": 4.5
+    },
+    {
+      "label": "Supporting text on amber tint",
+      "foreground": "text-secondary",
+      "background": "brand-soft",
+      "ratio": 5,
+      "minimum": 4.5
+    },
+    {
+      "label": "Primary action",
+      "foreground": "primary-foreground",
+      "background": "primary",
+      "ratio": 4.87,
+      "minimum": 4.5
+    },
+    {
+      "label": "Field boundary on white",
+      "foreground": "control-border",
+      "background": "background",
+      "ratio": 3.7,
+      "minimum": 3
+    }
+  ]
+}

@@ -24,38 +24,77 @@ A coffee-shop finder: log, rate, and discover coffee shops by amenities and loca
 
 ## How a request flows
 
-1. **`proxy.ts`** (project root) runs `clerkMiddleware()` on every matched request — this is Clerk's gatekeeper and attaches auth context.
-2. A **Next.js** page or server component handles the request; `<ClerkProvider>` wraps the app in `app/layout.tsx`.
+1. **`src/proxy.ts`** runs `clerkMiddleware()` on every matched request — Clerk's gatekeeper; it attaches auth context.
+2. A route in **`src/app/`** handles the request; `<ClerkProvider>` wraps the app in `src/app/layout.tsx`. Routes stay thin: they parse params, call `src/server/*`, and render `src/components/*`.
 3. Clerk owns the **identity** (email, name, avatar, the `user_…` ID) on Clerk's servers.
-4. **`getUser()`** (`prisma/lib/get-user.ts`) upserts a matching row into the app's `User` table keyed by Clerk's user ID — the just-in-time sync. Call it from server components/actions that need the DB user.
-5. **Prisma** → **Neon**: all app data (`User`, `Shop`, `Visit`, `Rating`, `Follow`) lives in Neon.
+4. **`getUser()`** (`src/lib/auth.ts`) returns the app's `User` row for the signed-in user: `auth()` reads the session locally, then one primary-key lookup; Clerk's rate-limited Backend API is only called the first time a user is seen (just-in-time sync). It is memoized per request. `requireUser()` throws when signed out.
+5. **`src/server/<domain>/`** → **Prisma** → **Neon**: all app data (`User`, `Shop`, `Visit`, `Rating`, `Follow`) lives in Neon.
 
 Clerk owns *who the user is*; Neon owns *what the user does*. Everything in the data model links to a user via the synced `User.id` (= Clerk's ID), which is why auth was swappable without touching the schema.
 
 ## Layout & conventions
 
-- **Path alias:** `@/*` → repo root (see `tsconfig.json`). Import the DB user as `@/prisma/lib/get-user`.
-- **Prisma client singleton:** `prisma/lib/prisma.ts` — constructs `PrismaClient` with the `PrismaNeon` adapter. Always import `prisma` from there; never `new PrismaClient()` elsewhere (hot-reload would open many connections).
-- **`proxy.ts` must stay at the project root**, next to `app/`. In Next.js 16 middleware was renamed to `proxy`; a file in `src/` or named `middleware.ts` will not be detected and Clerk will throw "can't detect clerkMiddleware()". A proxy file is only picked up at dev-server startup — restart `npm run dev` after changing it.
+```
+prisma/            schema.prisma + seed.ts only
+src/app/           routes only (shops/, shops/[slug]/, me/, log-visit/, api/shops/)
+src/components/    ui/ (primitives + Icon), shops/ (features), layout/, providers/
+src/server/        server-only data access by domain: shops/, visits/, ratings/
+src/lib/           prisma.ts, auth.ts, and small shared helpers (utils, geo, slug, …)
+src/hooks/         client hooks
+src/types/         shared UI-facing types (DB row types stay in @prisma/client)
+src/proxy.ts       Clerk middleware
+```
+
+- **Path aliases:** `@/*` → `src/*`; `@public/*` → `public/*` for static image imports (see `tsconfig.json`).
+- **Data access boundary:** pages and components never import Prisma. Reads live in `src/server/<domain>/queries.ts`; mutations in `src/server/<domain>/actions.ts` (`"use server"`). Actions validate input with zod (schemas in a sibling `schemas.ts`, since `"use server"` files may only export async functions), check auth via `getUser()`, scope writes by `userId`, and return `ActionResult` (`src/server/action-result.ts`) for expected failures. Server-only modules start with `import "server-only"`.
+- **Client reads:** client components fetch through GET route handlers in `src/app/api/` (CDN-cacheable), not server actions.
+- **Query hygiene:** select only needed columns (`shopViewSelect`), filter/sort/paginate in SQL, cap every page size, and end every `orderBy` on `id` so pages are stable.
+- **Denormalized ratings:** `Shop.ratingSum/ratingCount/ratingAvg` are written only by `src/server/ratings/actions.ts`, inside a transaction that locks the shop row (`SELECT … FOR UPDATE`).
+- **Discover state** lives in the URL (`src/lib/shop-filters.ts` serializes, `src/server/shops/filters.ts` parses leniently with zod).
+- **Prisma client singleton:** `src/lib/prisma.ts` — constructs `PrismaClient` with the `PrismaNeon` adapter and sets `neonConfig.webSocketConstructor = ws` (Node 20 has no global WebSocket). Always import `prisma` from there; never `new PrismaClient()` in app code (hot reload would open many pools). One-off scripts like `prisma/seed.ts` build their own client.
+- **`src/proxy.ts` must sit beside `src/app/`.** In Next.js 16 middleware was renamed to `proxy`; a proxy anywhere else, or named `middleware.ts`, is not detected and Clerk throws "can't detect clerkMiddleware()". It is only picked up at dev-server startup — restart `npm run dev` after changing it. Keep no `app/` or `pages/` directory at the repo root: Next ignores `src/app` if one exists.
 - **Prisma 7 datasource:** `schema.prisma`'s `datasource` block has **no `url`** — the connection string lives in `prisma7.config.ts` (`datasource.url` from `DATABASE_URL`). Do not re-add `url` to the schema; v7 rejects it.
-- **Schema changes:** this project uses `npx prisma db push` (no `prisma/migrations` dir yet). Run `npx prisma generate` after editing `schema.prisma`, then `db push`. Inspect data with `npx prisma studio`.
+- **Schema changes:** this project uses `db push` (no `prisma/migrations` dir yet). After editing `schema.prisma`, run `npx prisma generate` then `npm run db:push`. Keep the `Amenity` enum in sync with `src/types` and `src/lib/amenities.ts` (the shop mapper fails to type-check if they drift).
 - **Env vars** (in `.env`, gitignored; never commit): `DATABASE_URL` (Neon), `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`. Only one file should define auth/DB vars — `.env.local` and `.env.development` override `.env`, so keep auth vars in one place to avoid shadowing.
 
 ## Commands
 
-- `npm run dev` — start the dev server (restart it after any `.env` or `proxy.ts` change)
-- `npm run build` / `npm run start`
+- `npm run dev` — start the dev server at `http://localhost:4000` (restart it after any `.env` or `src/proxy.ts` change)
+- `npm run build` / `npm run start` — production start also uses port 4000
 - `npm run lint`
-- `npx prisma generate` → `npx prisma db push` — sync schema to Neon
-- `npx prisma studio` — browse/edit data
+- `npm run test:ui` — isolated React/Base UI interaction regressions against `scripts/fixtures/shops.json` (Next, Clerk, and `fetch` are stubbed; no DB or real user data is touched)
+- `npx prisma generate` → `npm run db:push` — sync schema to Neon (`postinstall` also runs `prisma generate`)
+- `npm run db:seed` — upsert the sample shops (idempotent)
+- `npm run db:studio` — browse/edit data
+
+## UI system: shadcn preset bzDadqTHU
+
+Use this preset for Cuptrail UI development:
+
+```sh
+npx shadcn@latest init --preset bzDadqTHU --template next
+```
+
+The installed configuration is **Base UI + Luma**, **stone** base, **amber** theme/chart accents, **Lucide** icons, **medium** radius, **Figtree** body text, and **Nunito Sans** headings. Menu color is `default` and menu accent is `subtle`. The preset code does not select the primitive library; this project uses `--base base`.
+
+- Read [the Cuptrail shadcn skill](.agents/skills/cuptrail-shadcn/SKILL.md) for UI work. Its Claude copy is under `.claude/skills/cuptrail-shadcn/`.
+- `components.json` is the CLI configuration; reuse primitives in `src/components/ui/` and `cn` from `src/lib/utils.ts`. Add missing primitives with `npx shadcn@latest add <component>`.
+- `src/app/shadcn-theme.css` owns preset tokens; `src/app/design-tokens.css` maps Cuptrail-specific roles to them. Use `--muted-foreground` for text and `--muted` for surfaces; amber primary actions use `--primary-foreground`.
+- Fonts are self-hosted through `next/font/local` in `src/app/layout.tsx`. Preserve both preset families and their licenses under `src/app/fonts/`.
+- The preset supersedes earlier palette/font/radius suggestions in `CUPTRAIL-UI-REFACTOR.md`; retain its product identity, mascot, responsive layout, accessibility, and feature-preservation requirements.
+- Do not rerun `init` for ordinary UI changes. Review a preset switch before applying it; preserve custom components, providers, routes, Clerk appearance, and existing state/API behavior.
 
 ## Prisma skills
 
 The `prisma-*` skills under `.agents/`, `.claude/`, and `.windsurf/` are vendored from `prisma/skills` (GitHub) and tracked by content hash in `skills-lock.json`. **Do not hand-edit them** — that breaks the hash. Re-sync with the Prisma skills tool to update. They are already Prisma-7-oriented (`prisma-upgrade-v7`, `prisma-orm-setup`, `prisma-driver-adapter-implementation`), which matches this stack.
 
-## Known cleanup (not yet done)
+## Known follow-ups
 
-- `schema.prisma` still carries the NextAuth-era models `Account`, `Session`, `VerificationToken` and the `User.accounts` / `User.sessions` relations. Clerk doesn't use these — they're dead and can be removed (then `db push`).
-- `app/layout.tsx` metadata still reads "Clerk Next.js Quickstart" / "Generated by create next app" — update to Cuptrail.
-- `README.md` is the default `create-next-app` boilerplate.
-- `proxy.ts` has a stale `// src/proxy.ts` comment; the file is correctly at the root.
+- **Journal is still device-local.** Visits, stars, saved shops, drafts, and photos live in localStorage (`src/components/providers/journal-provider.tsx`). `src/server/visits` and `src/server/ratings` implement the DB side, but moving the UI needs a `SavedShop` model, Visit fields for duration/orders/amenities, and blob storage for photos (they are data-URLs today).
+- **Scaling notes in code:** text search uses `ILIKE` (add a `pg_trgm` GIN index), "Nearest" ranks up to 2,000 candidates in memory (move to PostGIS KNN), and the log-visit shop picker is capped at 500 options (make it a search combobox). Each is commented at its call site.
+- **No migrations yet:** adopt `prisma migrate` before the database holds real user data.
+- **Clerk profile drift:** `getUser()` only copies name/email/avatar on first sight; add a Clerk `user.updated` webhook. `User.emailVerified` is a NextAuth leftover.
+- **Server actions have no rate limiting** yet.
+- The shop gallery is hardcoded for `kona-and-clay` in `shop-detail.tsx` (needs a `ShopPhoto` model).
+- Unused Manrope/Newsreader font files remain in `src/app/fonts/` (only Figtree and Nunito Sans are loaded), along with `scripts/download-stitch-assets.mjs` that fetches them.
+- Unknown `/shops/[slug]` URLs return HTTP 200 with a `noindex` tag rather than 404, because the root `loading.tsx` makes responses stream (documented Next.js behavior).
