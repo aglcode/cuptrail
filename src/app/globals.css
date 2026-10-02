@@ -334,7 +334,9 @@
     min-height: 56px;
     color: var(--text-secondary);
   }
-  .search-field:focus-within {
+  /* The field's own border is the focus cue for its embedded input. */
+  .search-field:focus-within,
+  .journal-search:focus-within {
     border-color: var(--focus);
   }
   .search-field input {
@@ -2777,11 +2779,6 @@
     padding: 0;
     background: transparent;
   }
-  .search-field:focus-within,
-  .journal-search:focus-within {
-    outline: 3px solid var(--focus);
-    outline-offset: 4px;
-  }
   [data-slot="native-select-wrapper"].form-input {
     padding: 0;
     border: 0;
@@ -2832,6 +2829,11 @@
 [data-slot="checkbox"]:focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 3px;
+}
+/* Inputs embedded in a framed search field: the frame shows focus instead. */
+.search-field [data-slot="input"]:focus-visible,
+.journal-search [data-slot="input"]:focus-visible {
+  outline: none;
 }
 [data-slot="native-select"],
 .form-input[data-slot="input"],
