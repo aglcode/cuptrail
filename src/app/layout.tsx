@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import localFont from "next/font/local";
-import { AppHeader, AppFooter } from "@/components/layout/app-shell";
-import { JournalProvider } from "@/components/providers/journal-provider";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -73,11 +71,7 @@ export default function RootLayout({
             },
           }}
         >
-          <JournalProvider>
-            <AppHeader />
-            {children}
-            <AppFooter />
-          </JournalProvider>
+          {children}
         </ClerkProvider>
       </body>
     </html>
