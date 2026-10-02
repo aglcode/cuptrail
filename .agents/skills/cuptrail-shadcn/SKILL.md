@@ -17,13 +17,13 @@ npx shadcn@latest init --preset bzDadqTHU --template next
 
 Resolved choices: Luma style; stone base; amber theme and charts; Lucide icons; medium radius; Figtree body font; Nunito Sans heading font; default menu color; subtle menu accent. Cuptrail uses Base UI primitives (`--base base`). The preset code does not encode the primitive library.
 
-Read `components.json` and the actual files in `components/ui/` before composing controls. Base UI uses `render` composition rather than Radix `asChild`; use the installed component types instead of assuming another library's API. The project `Icon` adapter maps existing semantic names to Lucide.
+Read `components.json` and the actual files in `src/components/ui/` before composing controls. Base UI uses `render` composition rather than Radix `asChild`; use the installed component types instead of assuming another library's API. The project `Icon` adapter maps existing semantic names to Lucide.
 
 - Reuse local shadcn Button, Input, Textarea, Checkbox, NativeSelect, Toggle, Card, Badge, Tabs, and Dialog primitives as appropriate. Add missing components with `npx shadcn@latest add <component>`; inspect the CLI diff when updating customized files.
 - Use `cn` from `@/lib/utils` to merge utility classes. Keep domain logic in the existing components/providers; UI primitives should remain reusable.
-- `app/shadcn-theme.css` contains the generated preset colors and radii. `app/design-tokens.css` maps app-specific roles and spacing. Put layout rules in `app/globals.css`, without overriding primitive typography, shapes, or interaction states unnecessarily.
+- `src/app/shadcn-theme.css` contains the generated preset colors and radii. `src/app/design-tokens.css` maps app-specific roles and spacing. Put layout rules in `src/app/globals.css`, without overriding primitive typography, shapes, or interaction states unnecessarily.
 - `--muted` and `--accent` are surface colors. Use `--muted-foreground` and `--accent-foreground` for text, and `--primary-foreground` on amber actions. Use semantic foregrounds on overlays and status surfaces; do not infer that white text is legible on amber.
-- Fonts are local assets loaded by `next/font/local` in `app/layout.tsx`. Use Figtree for body and controls, Nunito Sans for headings. Keep font licenses with the files and avoid build-time font downloads.
+- Fonts are local assets loaded by `next/font/local` in `src/app/layout.tsx`. Use Figtree for body and controls, Nunito Sans for headings. Keep font licenses with the files and avoid build-time font downloads.
 
 The preset overrides palette, typography, and radius suggestions in `CUPTRAIL-UI-REFACTOR.md`. Retain the guide's mascot, welcoming coffee identity, content hierarchy, generous spacing, responsive behavior, and accessibility requirements. Do not replace or recolor the mascot to match a theme.
 

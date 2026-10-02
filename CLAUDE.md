@@ -18,6 +18,7 @@ A few reminders specific to working here:
 
 - Prefer plan mode with step-by-step diffs; explain each change before applying it.
 - After editing `schema.prisma`, run `npx prisma generate` then `npx prisma db push` — there are no migration files to create.
-- Restart `npm run dev` after any change to `.env*` or `proxy.ts`; neither is hot-reloaded.
+- Restart `npm run dev` after any change to `.env*` or `src/proxy.ts`; neither is hot-reloaded.
+- Pages and components never import Prisma: reads go in `src/server/<domain>/queries.ts`, writes in `src/server/<domain>/actions.ts`.
 - Don't re-add `url` to the Prisma `datasource` block — on Prisma 7 the connection string lives in `prisma7.config.ts`.
 - Don't hand-edit the vendored `prisma-*` skills; they're hash-tracked in `skills-lock.json`.
