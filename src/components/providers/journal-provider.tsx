@@ -2,7 +2,8 @@
 
 import { createContext, useContext, useSyncExternalStore, useState, type ReactNode } from 'react';
 import { useUser } from '@clerk/nextjs';
-import { exampleVisits, getShop } from '@/lib/coffee-data';
+import { exampleVisits } from './example-journal';
+import { isShopSlug } from '@/lib/slug';
 import { amenityOptions } from '@/lib/amenities';
 import type { Visit, VisitDraft } from '@/types';
 
@@ -19,14 +20,14 @@ function parse(value: string | null): Journal {
   if (!value) return initial;
   try {
     const result = JSON.parse(value);
-    if (!Array.isArray(result.visits) || !result.visits.every(validVisit) || !Array.isArray(result.saved) || !result.saved.every((id: unknown) => typeof id === 'string' && getShop(id)) || typeof result.drafts !== 'object' || !result.drafts || Array.isArray(result.drafts) || !Object.values(result.drafts).every(validDraft)) return initial;
+    if (!Array.isArray(result.visits) || !result.visits.every(validVisit) || !Array.isArray(result.saved) || !result.saved.every(isShopSlug) || typeof result.drafts !== 'object' || !result.drafts || Array.isArray(result.drafts) || !Object.values(result.drafts).every(validDraft)) return initial;
     return result;
   } catch { return initial; }
 }
 function validDraft(value: unknown): value is VisitDraft {
   if (!value || typeof value !== 'object') return false;
   const draft = value as VisitDraft;
-  return typeof draft.shopId === 'string' && Boolean(getShop(draft.shopId)) && typeof draft.date === 'string' && !Number.isNaN(new Date(draft.date).getTime()) && Number.isInteger(draft.stars) && draft.stars >= 0 && draft.stars <= 5 && Number.isFinite(draft.duration) && draft.duration >= 0.5 && draft.duration <= 6 && typeof draft.note === 'string' && draft.note.length <= 500 && Array.isArray(draft.amenities) && draft.amenities.every(id => amenityOptions.some(option => option.id === id)) && Array.isArray(draft.orders) && draft.orders.every(order => typeof order === 'string') && Array.isArray(draft.photos) && draft.photos.length <= 4 && draft.photos.every(photo => typeof photo === 'string' && photo.startsWith('data:image/'));
+  return isShopSlug(draft.shopId) && typeof draft.date === 'string' && !Number.isNaN(new Date(draft.date).getTime()) && Number.isInteger(draft.stars) && draft.stars >= 0 && draft.stars <= 5 && Number.isFinite(draft.duration) && draft.duration >= 0.5 && draft.duration <= 6 && typeof draft.note === 'string' && draft.note.length <= 500 && Array.isArray(draft.amenities) && draft.amenities.every(id => amenityOptions.some(option => option.id === id)) && Array.isArray(draft.orders) && draft.orders.every(order => typeof order === 'string') && Array.isArray(draft.photos) && draft.photos.length <= 4 && draft.photos.every(photo => typeof photo === 'string' && photo.startsWith('data:image/'));
 }
 function validVisit(value: unknown): value is Visit {
   return validDraft(value) && typeof (value as Visit).id === 'string' && value.stars >= 1;

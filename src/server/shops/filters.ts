@@ -2,6 +2,7 @@ import "server-only";
 import { z } from "zod";
 import { isAmenity } from "@/lib/amenities";
 import { DEFAULT_SHOP_SORT, shopSorts } from "@/lib/shop-filters";
+import { isShopSlug } from "@/lib/slug";
 import type { Amenity, ShopFilters } from "@/types";
 
 type RawParams = Record<string, string | string[] | undefined> | URLSearchParams;
@@ -42,9 +43,7 @@ export function parseOffset(params: RawParams): number {
   return offsetSchema.parse(first(params, "offset"));
 }
 
-const slugSchema = z.string().regex(/^[a-z0-9-]{1,100}$/);
-
 /** Parses a comma-separated slug list, dropping invalid entries and capping its length. */
 export function parseSlugs(value: string | null | undefined, max: number): string[] {
-  return [...new Set((value ?? "").split(","))].filter(slug => slugSchema.safeParse(slug).success).slice(0, max);
+  return [...new Set((value ?? "").split(","))].filter(isShopSlug).slice(0, max);
 }

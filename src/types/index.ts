@@ -32,9 +32,6 @@ export type ShopView = {
   map: [number, number] | null;
 };
 
-/** @deprecated Static sample-data shape (id = slug); removed once the UI reads ShopView. */
-export type Shop = Omit<ShopView, "slug" | "map"> & { map: [number, number] };
-
 /** Just enough to pick a shop from a list. */
 export type ShopOption = Pick<ShopView, "slug" | "name" | "neighborhood">;
 

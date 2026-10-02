@@ -1,17 +1,17 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { ShopDetail } from '@/components/shops/shop-detail';
-import { getShop, shops } from '@/lib/coffee-data';
+import { getShopBySlug } from '@/server/shops/queries';
 
-export function generateStaticParams() { return shops.map(shop => ({ slug: shop.id })); }
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params;
-  const shop = getShop(slug);
+type Props = { params: Promise<{ slug: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const shop = await getShopBySlug((await params).slug);
   return { title: shop?.name ?? 'Shop not found', description: shop?.description };
 }
-export default async function ShopPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const shop = getShop(slug);
+
+export default async function ShopPage({ params }: Props) {
+  const shop = await getShopBySlug((await params).slug);
   if (!shop) notFound();
   return <ShopDetail shop={shop}/>;
 }

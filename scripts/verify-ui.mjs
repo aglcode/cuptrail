@@ -26,11 +26,12 @@ const React = require('react');
 const { act } = React;
 const { createRoot } = require('react-dom/client');
 const navigations = [];
+const replacements = [];
 let identity = null;
 const load = Module._load;
 Module._load = function (request, parent, main) {
   if (request === '@clerk/nextjs') return { useUser: () => ({ user: identity }) };
-  if (request === 'next/navigation') return { useRouter: () => ({ push: url => navigations.push(url) }) };
+  if (request === 'next/navigation') return { useRouter: () => ({ push: url => navigations.push(url), replace: url => replacements.push(url) }) };
   if (request === 'next/link') return function MockLink(props) { return React.createElement('a', props); };
   if (request === 'next/image') return function MockImage(props) {
     const attributes = { ...props, src: typeof props.src === 'string' ? props.src : props.src.src };
@@ -55,7 +56,16 @@ const { Discover } = require('../src/components/shops/discover.tsx');
 const { MyShops } = require('../src/components/shops/my-shops.tsx');
 const { VisitForm } = require('../src/components/shops/visit-form.tsx');
 const { ShopDetail } = require('../src/components/shops/shop-detail.tsx');
-const { shops } = require('../src/lib/coffee-data.ts');
+const shops = JSON.parse(fs.readFileSync(path.join(project, 'scripts/fixtures/shops.json'), 'utf8'));
+const option = shop => ({ slug: shop.slug, name: shop.name, neighborhood: shop.neighborhood });
+globalThis.fetch = async url => {
+  const { pathname, searchParams } = new URL(url, 'https://cuptrail.test');
+  if (pathname === '/api/shops/lookup') {
+    const slugs = searchParams.get('slugs').split(',');
+    return Response.json(shops.filter(shop => slugs.includes(shop.slug)));
+  }
+  throw new Error(`Unexpected fetch: ${url}`);
+};
 const container = document.querySelector('#test-root');
 const root = createRoot(container);
 let page = 0;
@@ -76,17 +86,36 @@ async function change(element, value) {
 async function render(Component, props = {}) {
   await act(async () => root.render(React.createElement(JournalProvider, { key: ++page }, React.createElement(Component, props))));
 }
+// Re-render the mounted component with new props, e.g. the server's response to a URL change.
+async function update(Component, props = {}) {
+  await act(async () => root.render(React.createElement(JournalProvider, { key: page }, React.createElement(Component, props))));
+}
+const settle = (ms = 0) => act(() => new Promise(resolve => setTimeout(resolve, ms)));
+const neighborhoods = [...new Set(shops.map(shop => shop.neighborhood))].sort();
+function discover(items, filters = {}) {
+  return { filters: { amenities: [], sort: 'recommended', ...filters }, page: { items, total: items.length, nextOffset: null }, neighborhoods };
+}
+const withAmenity = id => shops.filter(shop => shop.amenities.includes(id));
 function passed(name) { results.push(name); console.log(`PASS ${name}`); }
 function journal() { return JSON.parse(localStorage.getItem(`cuptrail-journal-v1:${identity?.id ?? 'guest'}`)); }
 
 try {
-  await render(Discover);
+  await render(Discover, discover(shops));
   assert.equal(all('.shop-card').length, 5);
   await change(document.querySelector('#shop-search'), 'kona');
+  await settle(300);
+  assert.equal(replacements.at(-1), '/shops?q=kona');
+  await update(Discover, discover(shops.filter(shop => shop.slug === 'kona-and-clay'), { q: 'kona' }));
   assert.equal(all('.shop-card').length, 1);
   await change(document.querySelector('#shop-search'), '');
+  await settle(300);
+  assert.equal(replacements.at(-1), '/shops');
+  await update(Discover, discover(shops));
   await change(byLabel('select', 'Sort coffee shops'), 'nearest');
-  assert.deepEqual(all('.shop-card h2').map(element => element.textContent), ['Kona & Clay', 'Linden & Leaf', 'Dune Roasters', 'Marrow Coffee Works', 'Ninth Street Espresso']);
+  assert.equal(replacements.at(-1), '/shops?sort=nearest');
+  const nearest = [...shops].sort((a, b) => a.distance - b.distance);
+  await update(Discover, discover(nearest, { sort: 'nearest' }));
+  assert.deepEqual(all('.shop-card h2').map(element => element.textContent), nearest.map(shop => shop.name));
   await click(byText('button', 'Grid only'));
   assert.equal(document.querySelector('.discovery-map'), null);
   await click(byText('button', 'Split view'));
@@ -95,8 +124,14 @@ try {
   await click(byLabel('button', 'Reset map view'));
   assert.equal(document.querySelector('.map-art').style.transform, 'scale(1)');
   await click(byText('button', 'Fast Wi-Fi'));
+  assert.equal(replacements.at(-1), '/shops?amenities=wifi&sort=nearest');
+  await update(Discover, discover(withAmenity('wifi'), { amenities: ['wifi'], sort: 'nearest' }));
   assert.equal(all('.shop-card').length, 3);
+  await click(byText('button', '4.5+ rating'));
+  assert.equal(replacements.at(-1), '/shops?amenities=wifi&minRating=4.5&sort=nearest');
   await click(byText('button', 'Clear'));
+  assert.equal(replacements.at(-1), '/shops?sort=nearest');
+  await update(Discover, discover(shops));
   await click(byLabel('button', 'Save Kona & Clay'));
   assert.deepEqual(journal().saved, ['kona-and-clay']);
   passed('Discovery search, sorting, layouts, map zoom/reset, amenity toggle, and bookmark persistence');
@@ -104,7 +139,11 @@ try {
   await click(byText('button', 'All filters'));
   assert.ok(document.querySelector('[role="dialog"]'));
   await click(byLabel('[role="checkbox"]', 'Outdoor seating'));
+  assert.equal(replacements.at(-1), '/shops?amenities=outdoor');
+  await update(Discover, discover(withAmenity('outdoor'), { amenities: ['outdoor'] }));
   await change(document.querySelector('#price-filter'), '2');
+  assert.equal(replacements.at(-1), '/shops?amenities=outdoor&price=2');
+  await update(Discover, discover(withAmenity('outdoor').filter(shop => shop.price === 2), { amenities: ['outdoor'], price: 2 }));
   await click(byText('button', 'Show 1 places'));
   assert.equal(all('.shop-card').length, 1);
   assert.ok(container.textContent.includes('Linden & Leaf'));
@@ -115,6 +154,7 @@ try {
   passed('Dialog checkbox/price filtering and focus restoration');
 
   await render(MyShops);
+  await settle();
   await click(byText('[role="tab"]', 'Favorites3'));
   assert.equal(all('.visit-card').length, 3);
   await click(byText('[role="tab"]', 'Saved for later1'));
@@ -122,7 +162,7 @@ try {
   assert.equal(all('[role="tabpanel"]').length, 1);
   passed('Journal tab selection, filtered visits, and saved shops');
 
-  await render(VisitForm, { shop: shops[0] });
+  await render(VisitForm, { shop: option(shops[0]), options: shops.map(option) });
   await act(async () => document.querySelector('form').dispatchEvent(new Event('submit', { bubbles: true, cancelable: true })));
   assert.ok(document.querySelector('[role="alert"]').textContent.includes('Choose a star rating'));
   await click(byLabel('input', '5 stars'));
@@ -146,10 +186,10 @@ try {
   Object.defineProperty(upload, 'files', { configurable: true, value: Array.from({ length: 5 }, () => ({ type: 'image/jpeg', size: 100 })) });
   await act(async () => upload.dispatchEvent(new Event('change', { bubbles: true })));
   assert.ok(document.querySelector('[role="alert"]').textContent.includes('up to four photos'));
-  await render(VisitForm, { shop: shops[0] });
+  await render(VisitForm, { shop: option(shops[0]), options: shops.map(option) });
   assert.equal(document.querySelector('#visit-notes').value, 'Preset regression coffee memory');
   await act(async () => document.querySelector('form').dispatchEvent(new Event('submit', { bubbles: true, cancelable: true })));
-  assert.equal(navigations.at(-1), '/my-shops');
+  assert.equal(navigations.at(-1), '/me');
   assert.equal(journal().visits.length, 1);
   assert.equal(journal().visits[0].stars, 5);
   assert.equal(journal().visits[0].duration, 3);
@@ -159,15 +199,18 @@ try {
   passed('Rating/date/upload validation, duration, checkboxes/orders, per-shop drafts, and saving');
 
   await render(MyShops);
+  await settle();
   await click(all('.visit-delete')[0]);
   assert.equal(journal().visits.length, 0);
   await click(byText('button', 'Undo'));
   assert.equal(journal().visits.length, 1);
   identity = { id: 'test-other-account' };
   await render(MyShops);
+  await settle();
   assert.equal(all('.visit-card').length, 5);
   identity = null;
   await render(MyShops);
+  await settle();
   assert.equal(all('.visit-card').length, 1);
   passed('Visit removal/undo and per-account storage isolation');
 

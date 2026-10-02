@@ -12,29 +12,28 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useRef, useState, useSyncExternalStore, type ChangeEvent, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { shops, getShop } from '@/lib/coffee-data';
 import { amenityOptions } from '@/lib/amenities';
-import type { Amenity, Shop, VisitDraft } from '@/types';
+import type { Amenity, ShopOption, VisitDraft } from '@/types';
 import { Icon } from '@/components/ui/icon';
 import { useJournal } from '@/components/providers/journal-provider';
 
 const subscribe = () => () => {};
-export function VisitForm({ shop }: { shop: Shop }) {
+export function VisitForm({ shop, options }: { shop: ShopOption; options: ShopOption[] }) {
   const ready = useSyncExternalStore(subscribe, () => true, () => false);
-  return <main id="main-content" className="page-width log-main">{ready ? <VisitFormContent initialShop={shop}/> : <div className="form-loading" role="status"><Icon name="coffee" size={30}/><h1>Log a visit</h1><p>Getting your journal ready…</p></div>}</main>;
+  return <main id="main-content" className="page-width log-main">{ready ? <VisitFormContent initialShop={shop} options={options}/> : <div className="form-loading" role="status"><Icon name="coffee" size={30}/><h1>Log a visit</h1><p>Getting your journal ready…</p></div>}</main>;
 }
 
 function localDate() {
   const now = new Date();
   return new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().slice(0, 16);
 }
-function blankDraft(shop: Shop): VisitDraft { return { shopId: shop.id, date: localDate(), stars: 0, duration: 1.5, note: '', amenities: [], orders: [], photos: [] }; }
+function blankDraft(shopSlug: string): VisitDraft { return { shopId: shopSlug, date: localDate(), stars: 0, duration: 1.5, note: '', amenities: [], orders: [], photos: [] }; }
 const orders = ['Pour-over', 'Flat white', 'Cortado', 'Cold brew', 'Matcha', 'Cardamom bun'];
 
-function VisitFormContent({ initialShop }: { initialShop: Shop }) {
+function VisitFormContent({ initialShop, options }: { initialShop: ShopOption; options: ShopOption[] }) {
   const { drafts, visits, saveDraft, discardDraft, saveVisit, notify } = useJournal();
-  const [draft, setDraft] = useState<VisitDraft>(drafts[initialShop.id] ?? blankDraft(initialShop));
-  const [status, setStatus] = useState(drafts[initialShop.id] ? 'Draft restored' : 'No draft yet');
+  const [draft, setDraft] = useState<VisitDraft>(drafts[initialShop.slug] ?? blankDraft(initialShop.slug));
+  const [status, setStatus] = useState(drafts[initialShop.slug] ? 'Draft restored' : 'No draft yet');
   const [error, setError] = useState('');
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -43,7 +42,7 @@ function VisitFormContent({ initialShop }: { initialShop: Shop }) {
   const ratingRef = useRef<HTMLInputElement>(null);
   const draftRef = useRef(draft);
   const router = useRouter();
-  const shop = getShop(draft.shopId)!;
+  const shop = options.find(option => option.slug === draft.shopId) ?? initialShop;
   const personalVisits = visits.filter(visit => !visit.example);
   function update(next: Partial<VisitDraft>) {
     const value = { ...draftRef.current, ...next };
@@ -55,7 +54,7 @@ function VisitFormContent({ initialShop }: { initialShop: Shop }) {
   function toggleAmenity(id: Amenity) { update({ amenities: draft.amenities.includes(id) ? draft.amenities.filter(item => item !== id) : [...draft.amenities, id] }); }
   function toggleOrder(order: string) { update({ orders: draft.orders.includes(order) ? draft.orders.filter(item => item !== order) : [...draft.orders, order] }); }
   function changeShop(id: string) {
-    const next = drafts[id] ?? blankDraft(getShop(id)!);
+    const next = drafts[id] ?? blankDraft(id);
     setDraft(next); draftRef.current = next; setError(''); setStatus(drafts[id] ? 'Draft restored' : 'No draft yet');
   }
   async function attachPhotos(event: ChangeEvent<HTMLInputElement>) {
@@ -76,13 +75,13 @@ function VisitFormContent({ initialShop }: { initialShop: Shop }) {
     const date = new Date(draft.date);
     if (!draft.date || Number.isNaN(date.getTime()) || date.getTime() > Date.now() + 60_000) { setError('Choose a visit time in the past or today.'); return; }
     setSaving(true);
-    if (saveVisit(draft)) router.push('/my-shops');
+    if (saveVisit(draft)) router.push('/me');
     else { setError('Your visit could not be saved. Your draft is still here.'); setSaving(false); }
   }
-  function discard() { discardDraft(shop.id); notify('Draft discarded.'); router.push(`/shops/${shop.id}`); }
+  function discard() { discardDraft(shop.slug); notify('Draft discarded.'); router.push(`/shops/${shop.slug}`); }
   return <form onSubmit={submit} className="visit-form">
-    <div className="form-header"><div><p className="eyebrow text-primary mb-2">A little note from your coffee trail</p><h1>Log a visit</h1><p className="flex items-center gap-2 mt-2 text-muted-foreground"><Icon name="coffee" size={17}/>{shop.name}<span className="opacity-40">·</span>{shop.neighborhood}</p></div><LinkButton variant="secondary" href={`/shops/${shop.id}`} className="icon-button" aria-label="Close visit form"><Icon name="close" size={20}/></LinkButton></div>
-    <div className="form-context"><label htmlFor="shop-select" className="field-label">Where did you stop?</label><NativeSelect id="shop-select" className="form-input w-full" disabled={uploading} value={draft.shopId} onChange={event => changeShop(event.target.value)}>{shops.map(item => <option key={item.id} value={item.id}>{item.name} · {item.neighborhood}</option>)}</NativeSelect><span className="draft-status" role="status"><Icon name="check" size={13}/>{status}</span></div>
+    <div className="form-header"><div><p className="eyebrow text-primary mb-2">A little note from your coffee trail</p><h1>Log a visit</h1><p className="flex items-center gap-2 mt-2 text-muted-foreground"><Icon name="coffee" size={17}/>{shop.name}<span className="opacity-40">·</span>{shop.neighborhood}</p></div><LinkButton variant="secondary" href={`/shops/${shop.slug}`} className="icon-button" aria-label="Close visit form"><Icon name="close" size={20}/></LinkButton></div>
+    <div className="form-context"><label htmlFor="shop-select" className="field-label">Where did you stop?</label><NativeSelect id="shop-select" className="form-input w-full" disabled={uploading} value={draft.shopId} onChange={event => changeShop(event.target.value)}>{options.map(item => <option key={item.slug} value={item.slug}>{item.name} · {item.neighborhood}</option>)}</NativeSelect><span className="draft-status" role="status"><Icon name="check" size={13}/>{status}</span></div>
     <div className="form-columns"><div className="flex flex-col gap-7">
       <fieldset className="rating-field" role="radiogroup" aria-required="true" aria-invalid={Boolean(error && !draft.stars)} aria-describedby={error ? "rating-hint visit-error" : "rating-hint"}><legend className="field-label">Overall impression (required) <span className="text-primary">{draft.stars ? `${draft.stars}.0 / 5.0` : 'Choose your rating'}</span></legend><div className="star-picker">{[1, 2, 3, 4, 5].map(star => <label key={star}><input ref={star === 1 ? ratingRef : undefined} type="radio" name="stars" value={star} checked={draft.stars === star} onChange={() => update({ stars: star })} aria-label={`${star} ${star === 1 ? 'star' : 'stars'}`}/><Icon name="star" size={34} fill={draft.stars >= star} className={draft.stars >= star ? 'text-primary' : 'text-muted-foreground'}/></label>)}</div><p id="rating-hint" className="rating-caption">{['How did this little corner make you feel?', 'Not quite my cup of coffee.', 'A few good moments.', 'A lovely little coffee stop.', 'A place I’ll come back to.', 'A new favorite. Keep this one.'][draft.stars]}</p></fieldset>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4"><div className="form-time"><label className="field-label" htmlFor="visit-date"><Icon name="calendar" size={15}/>Visit time (required)</label><Input required type="datetime-local" id="visit-date" className="form-input" value={draft.date} max={localDate()} onChange={event => update({ date: event.target.value })}/></div><div className="form-time"><label className="field-label flex justify-between" htmlFor="duration">Time spent<span>{draft.duration} {draft.duration === 1 ? 'hour' : 'hours'}</span></label><input type="range" min="0.5" max="6" step="0.5" id="duration" value={draft.duration} onChange={event => update({ duration: Number(event.target.value) })}/><div className="flex justify-between text-xs text-muted-foreground"><span>30 min</span><span>A slow afternoon</span><span>6h</span></div></div></div>
