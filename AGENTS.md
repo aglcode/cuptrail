@@ -43,11 +43,29 @@ Clerk owns *who the user is*; Neon owns *what the user does*. Everything in the 
 
 ## Commands
 
-- `npm run dev` — start the dev server (restart it after any `.env` or `proxy.ts` change)
-- `npm run build` / `npm run start`
+- `npm run dev` — start the dev server at `http://localhost:4000` (restart it after any `.env` or `proxy.ts` change)
+- `npm run build` / `npm run start` — production start also uses port 4000
 - `npm run lint`
+- `npm run test:ui` — isolated React/Base UI interaction regressions (Next and Clerk boundaries are stubbed; no real user data is touched)
 - `npx prisma generate` → `npx prisma db push` — sync schema to Neon
 - `npx prisma studio` — browse/edit data
+
+## UI system: shadcn preset bzDadqTHU
+
+Use this preset for Cuptrail UI development:
+
+```sh
+npx shadcn@latest init --preset bzDadqTHU --template next
+```
+
+The installed configuration is **Base UI + Luma**, **stone** base, **amber** theme/chart accents, **Lucide** icons, **medium** radius, **Figtree** body text, and **Nunito Sans** headings. Menu color is `default` and menu accent is `subtle`. The preset code does not select the primitive library; this project uses `--base base`.
+
+- Read [the Cuptrail shadcn skill](.agents/skills/cuptrail-shadcn/SKILL.md) for UI work. Its Claude copy is under `.claude/skills/cuptrail-shadcn/`.
+- `components.json` is the CLI configuration; reuse primitives in `components/ui/` and `cn` from `lib/utils.ts`. Add missing primitives with `npx shadcn@latest add <component>`.
+- `app/shadcn-theme.css` owns preset tokens; `app/design-tokens.css` maps Cuptrail-specific roles to them. Use `--muted-foreground` for text and `--muted` for surfaces; amber primary actions use `--primary-foreground`.
+- Fonts are self-hosted through `next/font/local` in `app/layout.tsx`. Preserve both preset families and their licenses under `app/fonts/`.
+- The preset supersedes earlier palette/font/radius suggestions in `CUPTRAIL-UI-REFACTOR.md`; retain its product identity, mascot, responsive layout, accessibility, and feature-preservation requirements.
+- Do not rerun `init` for ordinary UI changes. Review a preset switch before applying it; preserve custom components, providers, routes, Clerk appearance, and existing state/API behavior.
 
 ## Prisma skills
 

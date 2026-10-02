@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-Open [localhost:3000](http://localhost:3000).
+Open [localhost:4000](http://localhost:4000). Both development and production start use port 4000.
 
 ```sh
 npm run lint

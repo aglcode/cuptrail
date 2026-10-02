@@ -1,0 +1,17 @@
+{
+  "mode": "jsdom component integration; Next/Clerk boundaries stubbed",
+  "passed": [
+    "Discovery search, sorting, layouts, map zoom/reset, amenity toggle, and bookmark persistence",
+    "Dialog checkbox/price filtering and focus restoration",
+    "Journal tab selection, filtered visits, and saved shops",
+    "Rating/date/upload validation, duration, checkboxes/orders, per-shop drafts, and saving",
+    "Visit removal/undo and per-account storage isolation",
+    "Gallery navigation, dismissal, and focus restoration"
+  ],
+  "unverified": [
+    "responsive visual layout",
+    "real OAuth",
+    "file uploads and downloads",
+    "native browser focus trapping"
+  ]
+}

@@ -2,6 +2,16 @@
 
 # Notes for Claude Code
 
+## Cuptrail UI preset
+
+Use shadcn preset **bzDadqTHU** for future components and styling:
+
+```sh
+npx shadcn@latest init --preset bzDadqTHU --template next
+```
+
+This project uses **Base UI / Luma**, stone + amber, Lucide, medium corners, Figtree body text, and Nunito Sans headings. Follow [cuptrail-shadcn](.claude/skills/cuptrail-shadcn/SKILL.md), reuse `components/ui/`, and add primitives with `npx shadcn@latest add <component>`. Read AGENTS.md for token ownership, preservation rules, and the full preset configuration. Do not reinitialize the existing app for routine component work.
+
 The project context, stack, architecture, conventions, and known cleanup items all live in `AGENTS.md` (imported above) — treat that as the source of truth and keep it, not this file, up to date as the project evolves.
 
 A few reminders specific to working here:

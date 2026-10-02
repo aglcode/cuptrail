@@ -1,14 +1,21 @@
 'use client';
 
+import { Toggle } from './ui/toggle';
+
+import { NativeSelect } from './ui/native-select';
+import { Input } from './ui/input';
+import { Button } from './ui/button';
+import { LinkButton } from './ui/link-button';
+
 import { useRef, useState, useEffect } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import mascot from '@/public/brand/cuptrail-mascot.png';
 import { shops, amenityOptions, type Amenity } from '@/lib/coffee-data';
 import { Icon } from './icon';
 import { ShopCard } from './shop-card';
 import { NeighborhoodMap } from './neighborhood-map';
-import { Dialog } from './dialog';
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from './ui/dialog';
+import { Checkbox } from './ui/checkbox';
 
 export function Discover() {
   const [query, setQuery] = useState('');
@@ -18,7 +25,8 @@ export function Discover() {
   const [sort, setSort] = useState('recommended');
   const [view, setView] = useState<'split' | 'grid' | 'map'>('split');
   const [price, setPrice] = useState('all');
-  const dialog = useRef<HTMLDialogElement>(null);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const filtersTrigger = useRef<HTMLButtonElement>(null);
   const search = useRef<HTMLInputElement>(null);
   useEffect(() => {
     function shortcut(event: KeyboardEvent) { if ((event.metaKey || event.ctrlKey) && event.key === 'k') { event.preventDefault(); search.current?.focus(); } }
@@ -33,7 +41,7 @@ export function Discover() {
   function toggleFilter(id: Amenity) { setFilters(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]); }
   function resetFilters() { setFilters([]); setRating(false); setPrice('all'); setNeighborhood('all'); setQuery(''); }
 
-  return <>
+  return <Dialog open={filtersOpen} onOpenChange={setFiltersOpen}>
     <main id="main-content" className={view === 'grid' ? 'discovery-grid' : undefined}>
     <div className="page-width discovery-main">
       <div className="discovery-heading">
@@ -43,25 +51,25 @@ export function Discover() {
     </div>
     <div className="discovery-toolbar"><div className="page-width">
       <div className="search-row">
-        <label className="region-select"><Icon name="compass" className="text-accent" size={21}/><span><span className="eyebrow">Explore a neighborhood</span><select aria-label="Neighborhood" value={neighborhood} onChange={event => setNeighborhood(event.target.value)}><option value="all">New York, NY</option>{Array.from(new Set(shops.map(shop => shop.neighborhood))).map(item => <option key={item}>{item}</option>)}</select></span></label>
-        <div className="search-control"><label htmlFor="shop-search" className="eyebrow">Search coffee shops</label><div className="search-field"><Icon name="search" size={20}/><input id="shop-search" ref={search} type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Name, neighborhood, or coffee…"/><kbd>Ctrl / ⌘ K</kbd></div></div>
-        <div className="view-toggle desktop-view" aria-label="Discovery layout"><button aria-pressed={view === 'split'} onClick={() => setView('split')}><Icon name="split" size={16}/>Split view</button><button aria-pressed={view === 'grid'} onClick={() => setView('grid')}><Icon name="grid" size={16}/>Grid only</button></div>
+        <label className="region-select"><Icon name="compass" className="text-primary" size={21}/><span><span className="eyebrow">Explore a neighborhood</span><NativeSelect aria-label="Neighborhood" value={neighborhood} onChange={event => setNeighborhood(event.target.value)}><option value="all">New York, NY</option>{Array.from(new Set(shops.map(shop => shop.neighborhood))).map(item => <option key={item}>{item}</option>)}</NativeSelect></span></label>
+        <div className="search-control"><label htmlFor="shop-search" className="eyebrow">Search coffee shops</label><div className="search-field"><Icon name="search" size={20}/><Input className="border-0 bg-transparent px-0 shadow-none focus-visible:ring-0 h-auto" id="shop-search" ref={search} type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Name, neighborhood, or coffee…"/><kbd>Ctrl / ⌘ K</kbd></div></div>
+        <div className="view-toggle desktop-view" aria-label="Discovery layout"><Toggle className="text-foreground" variant="default" pressed={view === 'split'} onPressedChange={() => setView('split')}><Icon name="split" size={16}/>Split view</Toggle><Toggle className="text-foreground" variant="default" pressed={view === 'grid'} onPressedChange={() => setView('grid')}><Icon name="grid" size={16}/>Grid only</Toggle></div>
       </div>
-      <div className="filter-bar"><button className={`filter-chip ${rating ? 'active' : ''}`} aria-pressed={rating} onClick={() => setRating(value => !value)}><Icon name="star" size={14} fill/>4.5+ rating</button>{amenityOptions.slice(0, 5).map(option => <button key={option.id} className={`filter-chip ${filters.includes(option.id) ? 'active' : ''}`} aria-pressed={filters.includes(option.id)} onClick={() => toggleFilter(option.id)}><Icon name={option.icon} size={15}/>{option.label}</button>)}<button className="filter-chip all-filters" onClick={() => dialog.current?.showModal()}><Icon name="sliders" size={16}/>All filters{activeCount > 0 && ` (${activeCount})`}</button>{activeCount > 0 && <button className="filter-clear" onClick={resetFilters}>Clear</button>}</div>
+      <div className="filter-bar"><Toggle variant="outline" className={`filter-chip`} pressed={rating} onPressedChange={() => setRating(value => !value)}><Icon name="star" size={14} fill/>4.5+ rating</Toggle>{amenityOptions.slice(0, 5).map(option => <Toggle variant="outline" key={option.id} className={`filter-chip`} pressed={filters.includes(option.id)} onPressedChange={() => toggleFilter(option.id)}><Icon name={option.icon} size={15}/>{option.label}</Toggle>)}<Button variant="outline" ref={filtersTrigger} className="filter-chip all-filters" onClick={() => setFiltersOpen(true)}><Icon name="sliders" size={16}/>All filters{activeCount > 0 && ` (${activeCount})`}</Button>{activeCount > 0 && <Button variant="ghost" className="filter-clear" onClick={resetFilters}>Clear</Button>}</div>
     </div></div>
     <div className="page-width discovery-results">
-      <div className="results-toolbar"><p aria-live="polite"><strong>{filtered.length}</strong> {filtered.length === 1 ? 'place' : 'places'} to make your own</p><div className="flex items-center gap-3"><label className="sort-control"><span>Sort:</span><select aria-label="Sort coffee shops" value={sort} onChange={event => setSort(event.target.value)}><option value="recommended">Our picks</option><option value="rating">Highest rated</option><option value="nearest">Nearest first</option><option value="name">Name A–Z</option></select></label><button className="mobile-map-toggle" aria-pressed={view === 'map'} onClick={() => setView(value => value === 'map' ? 'split' : 'map')}><Icon name={view === 'map' ? 'list' : 'pin'} size={15}/>{view === 'map' ? 'List' : 'Map'}</button></div></div>
+      <div className="results-toolbar"><p aria-live="polite"><strong>{filtered.length}</strong> {filtered.length === 1 ? 'place' : 'places'} to make your own</p><div className="flex items-center gap-3"><label className="sort-control"><span>Sort:</span><NativeSelect aria-label="Sort coffee shops" value={sort} onChange={event => setSort(event.target.value)}><option value="recommended">Our picks</option><option value="rating">Highest rated</option><option value="nearest">Nearest first</option><option value="name">Name A–Z</option></NativeSelect></label><Toggle variant="default" className="mobile-map-toggle lg:hidden" pressed={view === 'map'} onPressedChange={() => setView(value => value === 'map' ? 'split' : 'map')}><Icon name={view === 'map' ? 'list' : 'pin'} size={15}/>{view === 'map' ? 'List' : 'Map'}</Toggle></div></div>
       <div className={`discovery-layout ${view === 'map' ? 'mobile-map-view' : ''}`}>
         <div className="shop-results">
           <div className="shop-list">{filtered.map((shop, index) => <ShopCard shop={shop} key={shop.id} featured={index === 0} grid={view === 'grid'}/>)}</div>
-          {filtered.length === 0 && <div className="empty-state"><Icon name="search" size={34}/><h2>No shops match your search.</h2><p>Try another neighborhood or reset your filters.</p><button className="button button-dark" onClick={resetFilters}>Reset search & filters</button></div>}
-          <div className="discovery-note"><div className="note-icon"><Icon name="book" size={23}/></div><div><h2>A good spot is worth remembering.</h2><p>Save the details of your visit in your private journal.</p></div><Link href="/log-visit" className="button button-white">Log a visit<Icon name="arrow" size={15}/></Link></div>
+          {filtered.length === 0 && <div className="empty-state"><Icon name="search" size={34}/><h2>No shops match your search.</h2><p>Try another neighborhood or reset your filters.</p><Button variant="default" className="button button-dark" onClick={resetFilters}>Reset search & filters</Button></div>}
+          <div className="discovery-note"><div className="note-icon"><Icon name="book" size={23}/></div><div><h2>A good spot is worth remembering.</h2><p>Save the details of your visit in your private journal.</p></div><LinkButton variant="outline" href="/log-visit" className="button button-white">Log a visit<Icon name="arrow" size={15}/></LinkButton></div>
         </div>
         {view !== 'grid' && <aside className="discovery-map"><NeighborhoodMap shops={filtered}/><div className="map-footnote"><Icon name="compass" size={16}/><p>Follow your curiosity. The best spot is the one that feels like you.</p></div></aside>}
       </div>
       <p className="sample-disclosure">Explore the sample shops from our design collection. Ratings, amenities, and distances are illustrative.</p>
     </div>
     </main>
-    <Dialog ref={dialog} className="filter-dialog" aria-labelledby="filter-title"><div className="flex items-center justify-between mb-6"><h2 id="filter-title" className="text-2xl">Your kind of coffee spot.</h2><button className="icon-button" aria-label="Close filters" onClick={() => dialog.current?.close()}><Icon name="close"/></button></div><fieldset><legend className="field-label mb-3">Make yourself comfortable</legend><div className="grid grid-cols-2 gap-2">{amenityOptions.map(option => <label className="checkbox-tile" key={option.id}><input type="checkbox" checked={filters.includes(option.id)} onChange={() => toggleFilter(option.id)}/><Icon name={option.icon}/>{option.label}</label>)}</div></fieldset><label className="field-label mt-6 block" htmlFor="price-filter">Price range</label><select id="price-filter" className="form-input mt-2" value={price} onChange={event => setPrice(event.target.value)}><option value="all">Any price</option><option value="1">$ · Easy on the wallet</option><option value="2">$$ · A little treat</option><option value="3">$$$ · Something special</option></select><div className="flex justify-between mt-8"><button className="button button-soft" onClick={resetFilters}>Reset filters</button><button className="button button-accent" onClick={() => dialog.current?.close()}>Show {filtered.length} places<Icon name="arrow" size={16}/></button></div></Dialog>
-  </>;
+    <DialogContent finalFocus={filtersTrigger} className="filter-dialog sm:max-w-xl block" showCloseButton={false}><DialogDescription className="sr-only">Choose amenities and a price range to filter coffee shops.</DialogDescription><div className="flex items-center justify-between mb-6"><DialogTitle className="text-2xl">Your kind of coffee spot.</DialogTitle><Button variant="secondary" className="icon-button" aria-label="Close filters" onClick={() => setFiltersOpen(false)}><Icon name="close"/></Button></div><fieldset><legend className="field-label mb-3">Make yourself comfortable</legend><div className="grid grid-cols-2 gap-2">{amenityOptions.map(option => <label className="checkbox-tile" key={option.id}><Checkbox aria-label={option.label} checked={filters.includes(option.id)} onCheckedChange={() => toggleFilter(option.id)}/><Icon name={option.icon}/>{option.label}</label>)}</div></fieldset><label className="field-label mt-6 block" htmlFor="price-filter">Price range</label><NativeSelect id="price-filter" className="form-input mt-2 w-full" value={price} onChange={event => setPrice(event.target.value)}><option value="all">Any price</option><option value="1">$ · Easy on the wallet</option><option value="2">$$ · A little treat</option><option value="3">$$$ · Something special</option></NativeSelect><div className="flex justify-between mt-8"><Button variant="secondary" className="button button-soft" onClick={resetFilters}>Reset filters</Button><Button variant="default" className="button button-accent" onClick={() => setFiltersOpen(false)}>Show {filtered.length} places<Icon name="arrow" size={16}/></Button></div></DialogContent>
+  </Dialog>;
 }

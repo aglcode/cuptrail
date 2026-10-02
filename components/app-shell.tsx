@@ -1,5 +1,8 @@
 'use client';
 
+import { LinkButton } from './ui/link-button';
+import { Button } from './ui/button';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -24,8 +27,8 @@ export function AppHeader() {
           <Link href="/my-shops" aria-current={isLibrary ? 'page' : undefined}>My shops</Link>
         </nav>
         <div className="flex items-center gap-4">
-          <Link href="/log-visit" className="button button-dark header-log"><Icon name="plus" size={16}/>Log visit</Link>
-          <Show when="signed-out"><SignInButton mode="modal"><button className="profile-button" aria-label="Sign in to Cuptrail"><Icon name="user" size={17}/></button></SignInButton></Show>
+          <LinkButton variant="default" href="/log-visit" className="button button-dark header-log hidden md:inline-flex"><Icon name="plus" size={16}/>Log visit</LinkButton>
+          <Show when="signed-out"><SignInButton mode="modal"><Button variant="secondary" className="profile-button" aria-label="Sign in to Cuptrail"><Icon name="user" size={17}/></Button></SignInButton></Show>
           <Show when="signed-in"><UserButton appearance={{ elements: { avatarBox: 'w-11 h-11' } }}/></Show>
         </div>
       </div>
@@ -40,7 +43,7 @@ export function AppHeader() {
 
 export function AppFooter() {
   return <footer className="app-footer"><div className="page-width flex flex-wrap items-center justify-between gap-5 py-8">
-    <div className="flex items-center gap-3"><span className="brand-name text-xl">Cuptrail.</span><span className="text-sm text-muted">Good coffee. Places worth keeping.</span></div>
-    <div className="flex items-center gap-5 text-xs text-muted"><Link href="/">The directory</Link><Link href="/my-shops">Your field notes</Link><span>Stitch sample directory · © 2026</span></div>
+    <div className="flex items-center gap-3"><span className="brand-name text-xl">Cuptrail.</span><span className="text-sm text-muted-foreground">Good coffee. Places worth keeping.</span></div>
+    <div className="flex items-center gap-5 text-xs text-muted-foreground"><Link href="/">The directory</Link><Link href="/my-shops">Your field notes</Link><span>Stitch sample directory · © 2026</span></div>
   </div></footer>;
 }
