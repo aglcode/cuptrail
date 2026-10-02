@@ -1,6 +1,12 @@
 {
   "$schema": "https://json.schemastore.org/prettierrc",
-  "plugins": ["prettier-plugin-tailwindcss"],
+  "endOfLine": "auto",
+  "plugins": [
+    "prettier-plugin-tailwindcss"
+  ],
   "tailwindStylesheet": "./src/app/globals.css",
-  "tailwindFunctions": ["cn", "cva"]
+  "tailwindFunctions": [
+    "cn",
+    "cva"
+  ]
 }
