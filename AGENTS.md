@@ -25,7 +25,7 @@ A coffee-shop finder: log, rate, and discover coffee shops by amenities and loca
 ## How a request flows
 
 1. **`src/proxy.ts`** runs `clerkMiddleware()` on every matched request — Clerk's gatekeeper; it attaches auth context.
-2. A route in **`src/app/`** handles the request; `<ClerkProvider>` wraps the app in `src/app/layout.tsx`. Routes stay thin: they parse params, call `src/server/*`, and render `src/components/*`.
+2. A route in **`src/app/`** handles the request. The root `src/app/layout.tsx` holds `<html>`, fonts, `<ClerkProvider>`, and globals; each route group adds its own chrome. Routes stay thin: they parse params, call `src/server/*`, and render `src/components/*`.
 3. Clerk owns the **identity** (email, name, avatar, the `user_…` ID) on Clerk's servers.
 4. **`getUser()`** (`src/lib/auth.ts`) returns the app's `User` row for the signed-in user: `auth()` reads the session locally, then one primary-key lookup; Clerk's rate-limited Backend API is only called the first time a user is seen (just-in-time sync). It is memoized per request. `requireUser()` throws when signed out.
 5. **`src/server/<domain>/`** → **Prisma** → **Neon**: all app data (`User`, `Shop`, `Visit`, `Rating`, `Follow`) lives in Neon.
@@ -36,8 +36,12 @@ Clerk owns *who the user is*; Neon owns *what the user does*. Everything in the 
 
 ```
 prisma/            schema.prisma + seed.ts only
-src/app/           routes only (shops/, shops/[slug]/, me/, log-visit/, api/shops/)
-src/components/    ui/ (primitives + Icon), shops/ (features), layout/, providers/
+src/app/           routes only; route groups (folders in parentheses) don't change URLs
+  (marketing)/     public pages with their own header/footer — page.tsx is the landing page at /
+  (app)/           the product (shops/, shops/[slug]/, me/, log-visit/); layout adds JournalProvider + AppHeader/AppFooter
+  api/shops/       GET route handlers
+  not-found.tsx    unmatched URLs (renders the app chrome itself); (app)/not-found.tsx handles notFound() in app routes
+src/components/    ui/ (primitives + Icon), shops/ (features), layout/ (app chrome, 404 body), marketing/, providers/
 src/server/        server-only data access by domain: shops/, visits/, ratings/
 src/lib/           prisma.ts, auth.ts, and small shared helpers (utils, geo, slug, …)
 src/hooks/         client hooks
@@ -47,6 +51,7 @@ src/proxy.ts       Clerk middleware
 
 - **Path aliases:** `@/*` → `src/*`; `@public/*` → `public/*` for static image imports (see `tsconfig.json`).
 - **Data access boundary:** pages and components never import Prisma. Reads live in `src/server/<domain>/queries.ts`; mutations in `src/server/<domain>/actions.ts` (`"use server"`). Actions validate input with zod (schemas in a sibling `schemas.ts`, since `"use server"` files may only export async functions), check auth via `getUser()`, scope writes by `userId`, and return `ActionResult` (`src/server/action-result.ts`) for expected failures. Server-only modules start with `import "server-only"`.
+- **Where pages go:** product routes under `src/app/(app)/`, public/marketing pages under `src/app/(marketing)/`. Keep Clerk's `<Show>`/`SignInButton` inside client components (`src/components/layout/header-account.tsx`): rendered from a server component they read the session and make the page dynamic, which would stop the landing page from being static.
 - **Client reads:** client components fetch through GET route handlers in `src/app/api/` (CDN-cacheable), not server actions.
 - **Query hygiene:** select only needed columns (`shopViewSelect`), filter/sort/paginate in SQL, cap every page size, and end every `orderBy` on `id` so pages are stable.
 - **Denormalized ratings:** `Shop.ratingSum/ratingCount/ratingAvg` are written only by `src/server/ratings/actions.ts`, inside a transaction that locks the shop row (`SELECT … FOR UPDATE`).
