@@ -1,0 +1,98 @@
+[
+  {
+    "route": "discover",
+    "viewport": 375,
+    "brokenImages": [],
+    "h1": 1,
+    "scrollWidth": 360,
+    "width": 360
+  },
+  {
+    "route": "journal",
+    "viewport": 375,
+    "brokenImages": [],
+    "h1": 1,
+    "scrollWidth": 360,
+    "width": 360
+  },
+  {
+    "route": "detail",
+    "viewport": 375,
+    "brokenImages": [],
+    "h1": 1,
+    "scrollWidth": 360,
+    "width": 360
+  },
+  {
+    "route": "log",
+    "viewport": 375,
+    "brokenImages": [],
+    "h1": 1,
+    "scrollWidth": 360,
+    "width": 360
+  },
+  {
+    "route": "discover",
+    "viewport": 768,
+    "brokenImages": [],
+    "h1": 1,
+    "scrollWidth": 753,
+    "width": 753
+  },
+  {
+    "route": "journal",
+    "viewport": 768,
+    "brokenImages": [],
+    "h1": 1,
+    "scrollWidth": 753,
+    "width": 753
+  },
+  {
+    "route": "detail",
+    "viewport": 768,
+    "brokenImages": [],
+    "h1": 1,
+    "scrollWidth": 753,
+    "width": 753
+  },
+  {
+    "route": "log",
+    "viewport": 768,
+    "brokenImages": [],
+    "h1": 1,
+    "scrollWidth": 753,
+    "width": 753
+  },
+  {
+    "route": "discover",
+    "viewport": 1440,
+    "brokenImages": [],
+    "h1": 1,
+    "scrollWidth": 1425,
+    "width": 1425
+  },
+  {
+    "route": "journal",
+    "viewport": 1440,
+    "brokenImages": [],
+    "h1": 1,
+    "scrollWidth": 1425,
+    "width": 1425
+  },
+  {
+    "route": "detail",
+    "viewport": 1440,
+    "brokenImages": [],
+    "h1": 1,
+    "scrollWidth": 1425,
+    "width": 1425
+  },
+  {
+    "route": "log",
+    "viewport": 1440,
+    "brokenImages": [],
+    "h1": 1,
+    "scrollWidth": 1425,
+    "width": 1425
+  }
+]
