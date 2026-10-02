@@ -1,0 +1,19 @@
+# Generated or installed
+.next/
+node_modules/
+package-lock.json
+next-env.d.ts
+src/generated/
+
+# Vendored skills (hash-tracked in skills-lock.json) and other agent files
+.agents/
+.claude/
+.windsurf/
+skills-lock.json
+
+# Design exports and test output
+design/
+public/
+
+# Docs are hand-formatted; AGENTS.md also holds a block `next dev` rewrites
+*.md
