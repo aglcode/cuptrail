@@ -12,7 +12,9 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useRef, useState, useSyncExternalStore, type ChangeEvent, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { shops, getShop, amenityOptions, type Shop, type VisitDraft, type Amenity } from '@/lib/coffee-data';
+import { shops, getShop } from '@/lib/coffee-data';
+import { amenityOptions } from '@/lib/amenities';
+import type { Amenity, Shop, VisitDraft } from '@/types';
 import { Icon } from '@/components/ui/icon';
 import { useJournal } from '@/components/providers/journal-provider';
 

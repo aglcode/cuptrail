@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { Shop } from '@/lib/coffee-data';
+import type { Shop } from '@/types';
 import { Icon } from '@/components/ui/icon';
 
 export function NeighborhoodMap({ shops, compact = false }: { shops: Shop[]; compact?: boolean }) {

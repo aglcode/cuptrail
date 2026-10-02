@@ -2,7 +2,9 @@
 
 import { createContext, useContext, useSyncExternalStore, useState, type ReactNode } from 'react';
 import { useUser } from '@clerk/nextjs';
-import { exampleVisits, getShop, amenityOptions, type Visit, type VisitDraft } from '@/lib/coffee-data';
+import { exampleVisits, getShop } from '@/lib/coffee-data';
+import { amenityOptions } from '@/lib/amenities';
+import type { Visit, VisitDraft } from '@/types';
 
 type Journal = { visits: Visit[]; saved: string[]; drafts: Record<string, VisitDraft> };
 const initial: Journal = { visits: exampleVisits, saved: [], drafts: {} };

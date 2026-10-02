@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { amenityOptions, type Shop } from '@/lib/coffee-data';
+import { amenityOptions } from '@/lib/amenities';
+import type { Shop } from '@/types';
 import { Icon } from '@/components/ui/icon';
 import { useJournal } from '@/components/providers/journal-provider';
 

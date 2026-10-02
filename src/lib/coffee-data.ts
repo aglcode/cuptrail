@@ -1,20 +1,4 @@
-export const amenityOptions = [
-  { id: 'wifi', label: 'Fast Wi-Fi', icon: 'wifi' },
-  { id: 'outlets', label: 'Power outlets', icon: 'plug' },
-  { id: 'quiet', label: 'Quiet corners', icon: 'volume' },
-  { id: 'outdoor', label: 'Outdoor seating', icon: 'leaf' },
-  { id: 'light', label: 'Natural light', icon: 'sun' },
-  { id: 'tables', label: 'Spacious tables', icon: 'table' },
-] as const;
-
-export type Amenity = (typeof amenityOptions)[number]['id'];
-export type Shop = {
-  id: string; name: string; neighborhood: string; address: string;
-  description: string; category: string; image: string; journalImage: string;
-  rating: number; reviews: number; price: number; distance: number;
-  wifi: number; noise: string; outlets: string; amenities: Amenity[];
-  roast: string; hours: string; specialty: string; map: [number, number];
-};
+import type { Shop, Visit } from '@/types';
 
 // Sample directory from the approved Stitch screens. These are design examples,
 // not verified businesses, live availability, or measured telemetry.
@@ -75,12 +59,6 @@ export const shops: Shop[] = [
   },
 ];
 
-export type Visit = {
-  id: string; shopId: string; date: string; stars: number; note: string;
-  duration: number; amenities: Amenity[]; orders: string[];
-  photos: string[]; example?: boolean;
-};
-export type VisitDraft = Omit<Visit, 'id' | 'example'>;
 export const exampleVisits: Visit[] = [
   { id: 'example-kona', shopId: 'kona-and-clay', date: '2026-10-01T09:30:00', stars: 5, duration: 2.5, amenities: ['wifi', 'outlets', 'quiet', 'light'], orders: ['Pour-over', 'Cardamom bun'], photos: [], example: true, note: 'Incredible natural light by the front window bar. The Ethiopian natural single-origin was beautifully floral. My new morning writing spot.' },
   { id: 'example-marrow', shopId: 'marrow-coffee-works', date: '2026-09-28T14:00:00', stars: 4, duration: 3, amenities: ['wifi', 'outlets', 'tables'], orders: ['Cortado'], photos: [], example: true, note: 'Great deep work session. Reliable high-speed internet, cozy walnut tables, and a perfect cortado. Headphones helped with the afternoon buzz.' },
@@ -90,6 +68,3 @@ export const exampleVisits: Visit[] = [
 ];
 
 export function getShop(id: string) { return shops.find(shop => shop.id === id); }
-export function formatVisitDate(date: string, full = false) {
-  return new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', ...(full ? { year: 'numeric' } : {}) }).format(new Date(date));
-}
