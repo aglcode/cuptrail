@@ -41,7 +41,7 @@ src/app/           routes only; route groups (folders in parentheses) don't chan
   (app)/           the product (shops/, shops/[slug]/, me/, log-visit/); layout adds JournalProvider + AppHeader/AppFooter
   api/shops/       GET route handlers
   not-found.tsx    unmatched URLs (renders the app chrome itself); (app)/not-found.tsx handles notFound() in app routes
-src/components/    ui/ (primitives + Icon), shops/ (features), layout/ (app chrome, 404 body), marketing/, providers/
+src/components/    ui/ (primitives + Icon), shops/ (features), layout/ (app chrome, 404 body), marketing/, early-access/, providers/
 src/server/        server-only data access by domain: shops/, visits/, ratings/
 src/lib/           prisma.ts, auth.ts, and small shared helpers (utils, geo, slug, …)
 src/hooks/         client hooks
@@ -60,7 +60,8 @@ src/proxy.ts       Clerk middleware
 - **`src/proxy.ts` must sit beside `src/app/`.** In Next.js 16 middleware was renamed to `proxy`; a proxy anywhere else, or named `middleware.ts`, is not detected and Clerk throws "can't detect clerkMiddleware()". It is only picked up at dev-server startup — restart `npm run dev` after changing it. Keep no `app/` or `pages/` directory at the repo root: Next ignores `src/app` if one exists.
 - **Prisma 7 datasource:** `schema.prisma`'s `datasource` block has **no `url`** — the connection string lives in `prisma7.config.ts` (`datasource.url` from `DATABASE_URL`). Do not re-add `url` to the schema; v7 rejects it.
 - **Schema changes:** this project uses `db push` (no `prisma/migrations` dir yet). After editing `schema.prisma`, run `npx prisma generate` then `npm run db:push`. Keep the `Amenity` enum in sync with `src/types` and `src/lib/amenities.ts` (the shop mapper fails to type-check if they drift).
-- **Env vars** (in `.env`, gitignored; never commit): `DATABASE_URL` (Neon), `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`. Only one file should define auth/DB vars — `.env.local` and `.env.development` override `.env`, so keep auth vars in one place to avoid shadowing.
+- **Env vars** (in `.env`, gitignored; never commit): `DATABASE_URL` (Neon), `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`. Only one file should define auth/DB vars — `.env.local` and `.env.development` override `.env`, so keep auth vars in one place to avoid shadowing. `.env.example` is the committed template.
+- **Early access:** `NEXT_PUBLIC_EARLY_ACCESS=true` (set for Production only in Vercel; inlined at build, so it needs a redeploy) makes `HeaderAccount` render `src/components/early-access/` instead of the sign-in button: a floating alert whose form calls Clerk's `joinWaitlist`. The flag only changes the UI — the enforcement is Clerk's **Waitlist** sign-up mode in the dashboard, which is instance-wide (local dev shares the instance). Unset means normal sign-in.
 
 ## Commands
 

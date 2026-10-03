@@ -70,6 +70,7 @@ src/
     shops/             # feature components (Discover, ShopCard, ShopDetail, VisitForm, …)
     layout/            # app header/footer, shared 404 body
     marketing/         # landing page header/footer
+    early-access/      # "Request early access" alert shown instead of sign-in when NEXT_PUBLIC_EARLY_ACCESS=true
     providers/         # client state (device-local journal)
   server/              # server-only data access, grouped by domain
     shops/             # queries, URL filter parsing, row → view mapping
