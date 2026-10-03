@@ -20,7 +20,7 @@ const figtree = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: "Cuptrail — Find your coffee corner",
+    default: "Cuptrail",
     template: "%s · Cuptrail",
   },
   description:
